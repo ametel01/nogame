@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@argent/get-starknet@^3.6.2":
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/@argent/get-starknet/-/get-starknet-3.6.2.tgz#36be2c1de0156617eed6d1dc873202c8435626c9"
+  integrity sha512-oM3KjEbMfbg0WY4sG5EMA/U/jOs6T7PDn6/hYZI0zqxr3kWWBAP4fBjo1b5UT8wdzF/xutm2U1CwlCb5ROy4Iw==
+  dependencies:
+    get-starknet "^1.0.0"
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.16.7":
   version "7.16.7"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.16.7.tgz#44416b6bd7624b998f5b1af5d470856c40138789"
@@ -1528,10 +1535,10 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.1.3.tgz#6801033be7ff87a6b7cadaf5b337c9f366a3c4b0"
   integrity sha512-WiBSI6JBIhC6LRIsB2Kwh8DsGTlbBU+mLRxJmAe3LjHTdkDpwIbEOZgoXBbZilk/vlfjK8i6nKRAvIRn1XaIMw==
 
-"@starknet-react/core@^0.11.0":
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/@starknet-react/core/-/core-0.11.0.tgz#4a78f7838a5f5f013005f37e0214ec4a256bc969"
-  integrity sha512-9biMUsD3+6NKPS1DDyKBllNPDWITSqwGjqwh74u8QhXw3DfsAlCkfDo8hGPhocFdKQp5ImsUJBbVW1qYzrpuog==
+"@starknet-react/core@^0.10.2":
+  version "0.10.2"
+  resolved "https://registry.yarnpkg.com/@starknet-react/core/-/core-0.10.2.tgz#458dcd9c861e0991e5c0c965755b032aca8856c2"
+  integrity sha512-FzuCz7hbFeu8y/TS9IFhQ8nGZly8Xsu7xPP2qUKD7sUZu9hlt8dcOEbbDFd8zelGjZm4W40pkUqmz0JDsVp6ww==
   dependencies:
     immutable "^4.0.0"
 
@@ -2767,10 +2774,10 @@ get-intrinsic@^1.0.2, get-intrinsic@^1.1.0, get-intrinsic@^1.1.1:
     has "^1.0.3"
     has-symbols "^1.0.1"
 
-get-starknet@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/get-starknet/-/get-starknet-1.4.2.tgz#fc7aa13506d672229157b357632a3f9b77ecd9d9"
-  integrity sha512-rakk6s5zcE3tM4AJ8g/SLO4V0aPlJDSLbE3zx3mp6PDS5Y7/ndBMTCKehr+bK4lIoj+VQshLxkobpqkXrC2LMA==
+get-starknet@^1.0.0:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/get-starknet/-/get-starknet-1.4.1.tgz#ea6f19bb2038878ab192822c9e59e1dca86c7b4d"
+  integrity sha512-HyYH4wngdOekeNFbtD4Qw+USQOfs1k9mWAHhhxiQyk2AKpdmLiIDz+A7lbA/X7OEi7U4Ypl0+Z4h7djq/ues9A==
   dependencies:
     bowser "^2.11.0"
 
