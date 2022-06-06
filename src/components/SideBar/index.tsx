@@ -21,7 +21,7 @@ const ButtonWrapper = styled.div`
 
 const SideBar = () => {
   const [called, setCalled] = useState(false)
-  const injected = useMemo(() => new InjectedConnector({ showModal: false }), [])
+  // const injected = useMemo(() => new InjectedConnector({ showModal: false }), [])
   const { account, disconnect } = useStarknet()
   const collectResources = useCollectResources()
 
