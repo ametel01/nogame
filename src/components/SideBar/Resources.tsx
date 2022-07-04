@@ -1,6 +1,6 @@
 import { useStarknet, useStarknetCall } from '@starknet-react/core'
 import { useGameContract } from '~/hooks/game'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { BigNumber } from 'bignumber.js'
 import { uint256 } from 'starknet'
 import styled from 'styled-components'
@@ -15,6 +15,7 @@ import coins from '../../assets/icons/Coins.svg'
 import gem from '../../assets/icons/Gem.svg'
 import atom from '../../assets/icons/Atom.svg'
 import bolt from '../../assets/icons/Bolt.svg'
+import { dataToNumber } from '~/utils'
 
 const Container = styled.div`
   //width: 250px;
@@ -42,6 +43,7 @@ interface Props {
   img: any
   iconImg: any
   title: string
+  address?: string
 }
 
 const TotalResourceText = styled.div`
@@ -57,13 +59,40 @@ const TotalResourceContainer = styled.div`
 const TotalResourceWrapper = styled.div`
   margin-left: 30px;
 `
+const ResourceAddress = styled.div`
+  font-size: 12px;
+`
 
-const Resource = ({ total, img, iconImg, title }: Props) => {
+const ImageAddressContainer = styled.div`
+  min &:hover {
+    cursor: pointer;
+  }
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  min-width: 50px;
+`
+
+const Resource = ({ total, img, iconImg, title, address }: Props) => {
+  const [copied, setCopied] = useState(false)
   return (
     <Container>
-      <div style={{ width: 32 }}>
-        <Image src={img} alt="resource" objectFit="contain" />
-      </div>
+      <ImageAddressContainer
+        onClick={() => {
+          if (address) {
+            const blob = new Blob([address], { type: 'text/plain' })
+            const item = new ClipboardItem({ 'text/plain': blob })
+            navigator.clipboard.write([item]).then(() => setCopied(true))
+          }
+        }}
+      >
+        <div style={{ width: '30px' }}>
+          <Image src={img} alt="resource" objectFit="contain" />
+        </div>
+        {address && !copied && <ResourceAddress>{`${address.substring(0, 6)}...`}</ResourceAddress>}
+        {copied && <ResourceAddress>Copied</ResourceAddress>}
+      </ImageAddressContainer>
       <TotalResourceWrapper>
         {title}
         <TotalResourceContainer>
@@ -87,18 +116,36 @@ const ResourcesContainer = () => {
   const points = useMemo(() => {
     if (data) {
       return {
-        metal: new BigNumber(uint256.uint256ToBN(data['metal'])).toNumber(),
-        crystal: new BigNumber(uint256.uint256ToBN(data['crystal'])).toNumber(),
-        deuterium: new BigNumber(uint256.uint256ToBN(data['deuterium'])).toNumber(),
-        energy: new BigNumber(uint256.uint256ToBN(data['energy'])).toNumber(),
+        metal: dataToNumber(data['metal']),
+        crystal: dataToNumber(data['crystal']),
+        deuterium: dataToNumber(data['deuterium']),
+        energy: dataToNumber(data['energy']),
       }
     }
   }, [data])
   return (
     <div>
-      <Resource title="Metal" img={iron} iconImg={coins} total={points?.metal} />
-      <Resource title="Crystal" img={crystal} iconImg={gem} total={points?.crystal} />
-      <Resource title="Deuterium" img={deuterium} iconImg={atom} total={points?.deuterium} />
+      <Resource
+        title="Metal"
+        address="0x043d8d23118a2fa64325a0b0a5606a67b30253cdb334c8fd75b270aba08c25ab"
+        img={iron}
+        iconImg={coins}
+        total={points?.metal}
+      />
+      <Resource
+        title="Crystal"
+        address="0x014a7a59e3e2d058d4c7c868e05907b2b49e324cc5b6af71182f008feb939e91"
+        img={crystal}
+        iconImg={gem}
+        total={points?.crystal}
+      />
+      <Resource
+        title="Deuterium"
+        address="0x03d4a1f4c738abdb692c5a150267afb975998a311883a67db3bcf218babe41d6"
+        img={deuterium}
+        iconImg={atom}
+        total={points?.deuterium}
+      />
       <Resource title="Energy" img={energy} iconImg={bolt} total={points?.energy} />
     </div>
   )

@@ -5,6 +5,6 @@ import abi from './abi/Ogame.json'
 export function useGameContract() {
   return useContract({
     abi: abi as Abi,
-    address: '0x01997e7ec8cd47b05b5f21c39d4bd64f467f3d8fc69c93664d066a005e6f40d0',
+    address: '0x035401b96dc690eda2716068d3b03732d7c18af7c0327787660179108789d84f',
   })
 }
