@@ -119,7 +119,7 @@ const PlanetImage = ({ planetId }: { planetId: any }) => {
 
       <PlanetInfoContainer>
         <PlanetInfoRow>
-          <PlanetInfoKey>Planet #</PlanetInfoKey>
+          <PlanetInfoKey>Position</PlanetInfoKey>
           <PlanetInfoValue>
             <PlanetIcon />
             {findAttribute('position')}
