@@ -2,9 +2,9 @@ import { StyledTabPanel } from './styleds'
 import styled from 'styled-components'
 import { CostUpgrade, EndTimeCompletion, Points, ResourceLevels } from '~/utils/types'
 import ResourceBox from '~/components/ResourceBox'
-import MetalImg from '~/assets/resources/metal.jpg'
 import RobotImg from '~/assets/resources/solar_satellite.jpg'
 import { calculEnoughResources } from '~/utils'
+import { useState } from 'react'
 
 const EmptyBox = styled.div`
   display: flex;
@@ -27,21 +27,28 @@ const EmptyContainer = styled.div`
 `
 interface Props {
   endTimeCompletion?: EndTimeCompletion
-  points?: Points
+  playerResources?: Points
   resourceLevels?: ResourceLevels
   costUpgrade?: CostUpgrade
 }
 
-export const FacilitiesTabPanel = ({ endTimeCompletion, points, resourceLevels, costUpgrade, ...rest }: Props) => {
+export const FacilitiesTabPanel = ({
+  endTimeCompletion,
+  playerResources,
+  resourceLevels,
+  costUpgrade,
+  ...rest
+}: Props) => {
+  const [isUpgrading, setIsUpgrading] = useState(false)
   const getEndTime = (resourceId: number) => {
-    if (endTimeCompletion) {
-      return endTimeCompletion.resourceId === resourceId ? endTimeCompletion.timeEnd : 0
+    if (endTimeCompletion?.resourceId === resourceId) {
+      if (endTimeCompletion?.timeEnd > 0 && !isUpgrading) {
+        setIsUpgrading(true)
+      }
+      return endTimeCompletion.timeEnd
     }
-    return 0
+    return undefined
   }
-
-  const isUpgrading = Boolean(endTimeCompletion?.timeEnd)
-
   return (
     <StyledTabPanel {...rest}>
       <ResourceBox
@@ -52,7 +59,7 @@ export const FacilitiesTabPanel = ({ endTimeCompletion, points, resourceLevels, 
         time={getEndTime(5)}
         costUpdate={costUpgrade?.robotFactory}
         isUpgrading={isUpgrading}
-        hasEnoughResources={points && costUpgrade && calculEnoughResources(costUpgrade.robotFactory, points)}
+        hasEnoughResources={playerResources && costUpgrade && calculEnoughResources(costUpgrade.robotFactory, points)}
       />
     </StyledTabPanel>
   )
