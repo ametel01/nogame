@@ -11,7 +11,9 @@ import { useStarknet, useStarknetCall } from '@starknet-react/core'
 import { useGameContract } from '~/hooks/game'
 import { differenceInMinutes, fromUnixTime } from 'date-fns'
 import { dataToNumber } from '~/utils'
-import { EmptyTabPanel } from '~/components/ResourcesSection/EmptyTabPanel'
+import { ResearchTabPanel } from '~/components/ResourcesSection/LabTabPanel'
+import { ShipyardTabPanel } from '~/components/ResourcesSection/ShipyardTabPanel'
+import { EmptyTabPanel } from './EmptyTabPanel'
 
 export const ResourcesSection: FC = () => {
   const { account } = useStarknet()
@@ -19,25 +21,25 @@ export const ResourcesSection: FC = () => {
 
   const { data: resourcesAvailable } = useStarknetCall({
     contract: gameContract,
-    method: 'resources_available',
+    method: 'getResourcesAvailable',
     args: [account],
   })
 
   const { data: timeCompletion } = useStarknetCall({
     contract: gameContract,
-    method: 'build_time_completion',
+    method: 'getBuildingQueStatus',
     args: [account],
   })
 
-  const { data } = useStarknetCall({
+  const { data: upgradesCost } = useStarknetCall({
     contract: gameContract,
-    method: 'get_structures_upgrade_cost',
+    method: 'getResourcesUpgradeCost',
     args: [account],
   })
 
   const { data: structureLevels } = useStarknetCall({
     contract: gameContract,
-    method: 'get_structures_levels',
+    method: 'getResourcesBuildingsLevels',
     args: [account],
   })
 
@@ -57,10 +59,10 @@ export const ResourcesSection: FC = () => {
   const playerResources = useMemo(() => {
     if (resourcesAvailable) {
       return {
-        metal: dataToNumber(resourcesAvailable['metal']),
-        crystal: dataToNumber(resourcesAvailable['crystal']),
-        deuterium: dataToNumber(resourcesAvailable['deuterium']),
-        energy: dataToNumber(resourcesAvailable['energy']),
+        metal: dataToNumber(resourcesAvailable['metal_available']),
+        crystal: dataToNumber(resourcesAvailable['crystal_available']),
+        deuterium: dataToNumber(resourcesAvailable['deuterium_available']),
+        energy: dataToNumber(resourcesAvailable['energy_available']),
       }
     }
   }, [resourcesAvailable])
@@ -78,36 +80,36 @@ export const ResourcesSection: FC = () => {
   }, [structureLevels])
 
   const costUpgrade = useMemo(() => {
-    if (data) {
+    if (upgradesCost) {
       return {
         metal: {
-          metal: dataToNumber(data['metal_mine'].metal),
-          crystal: dataToNumber(data['metal_mine'].crystal),
-          deuterium: dataToNumber(data['metal_mine'].deuterium),
+          metal: dataToNumber(upgradesCost['metal_mine'].metal),
+          crystal: dataToNumber(upgradesCost['metal_mine'].crystal),
+          energy: dataToNumber(upgradesCost['metal_mine'].energy_cost),
         },
         crystal: {
-          metal: dataToNumber(data['crystal_mine'].metal),
-          crystal: dataToNumber(data['crystal_mine'].crystal),
-          deuterium: dataToNumber(data['crystal_mine'].deuterium),
+          metal: dataToNumber(upgradesCost['crystal_mine'].metal),
+          crystal: dataToNumber(upgradesCost['crystal_mine'].crystal),
+          energy: dataToNumber(upgradesCost['crystal_mine'].energy_cost),
         },
         deuterium: {
-          metal: dataToNumber(data['deuterium_mine'].metal),
-          crystal: dataToNumber(data['deuterium_mine'].crystal),
-          deuterium: dataToNumber(data['deuterium_mine'].deuterium),
+          metal: dataToNumber(upgradesCost['deuterium_mine'].metal),
+          crystal: dataToNumber(upgradesCost['deuterium_mine'].crystal),
+          energy: dataToNumber(upgradesCost['deuterium_mine'].energy_cost),
         },
         solarPlant: {
-          metal: dataToNumber(data['solar_plant'].metal),
-          crystal: dataToNumber(data['solar_plant'].crystal),
-          deuterium: dataToNumber(data['solar_plant'].deuterium),
+          metal: dataToNumber(upgradesCost['solar_plant'].metal),
+          crystal: dataToNumber(upgradesCost['solar_plant'].crystal),
+          energy: dataToNumber(upgradesCost['solar_plant'].energy_cost),
         },
-        robotFactory: {
-          metal: dataToNumber(data['robot_factory'].metal),
-          crystal: dataToNumber(data['robot_factory'].crystal),
-          deuterium: dataToNumber(data['robot_factory'].deuterium),
-        },
+        // robotFactory: {
+        //   metal: dataToNumber(data['robot_factory'].metal),
+        //   crystal: dataToNumber(data['robot_factory'].crystal),
+        //   deuterium: dataToNumber(data['robot_factory'].deuterium),
+        // },
       }
     }
-  }, [data])
+  }, [upgradesCost])
 
   return (
     <ResourcesTabs>
@@ -124,12 +126,12 @@ export const ResourcesSection: FC = () => {
         </ResourceTab>
         <ResourceTab>
           <RowCentered gap={'8px'}>
-            <ResearchIcon /> Researches
+            <ResearchIcon /> Shipyard
           </RowCentered>
         </ResourceTab>
         <ResourceTab>
           <RowCentered gap={'8px'}>
-            <ShipyardIcon /> Shipyard
+            <ShipyardIcon /> Research
           </RowCentered>
         </ResourceTab>
         <ResourceTab>
@@ -148,12 +150,22 @@ export const ResourcesSection: FC = () => {
       />
       <FacilitiesTabPanel
         endTimeCompletion={endTimeCompletion}
-        points={playerResources}
+        playerResources={playerResources}
         resourceLevels={resourceLevels}
         costUpgrade={costUpgrade}
       />
-      <EmptyTabPanel />
-      <EmptyTabPanel />
+      <ShipyardTabPanel
+        endTimeCompletion={endTimeCompletion}
+        playerResources={playerResources}
+        resourceLevels={resourceLevels}
+        costUpgrade={costUpgrade}
+      />
+      <ResearchTabPanel
+        endTimeCompletion={endTimeCompletion}
+        playerResources={playerResources}
+        resourceLevels={resourceLevels}
+        costUpgrade={costUpgrade}
+      />
       <EmptyTabPanel />
     </ResourcesTabs>
   )

@@ -16,7 +16,7 @@ export default function useGeneratePlanet() {
     }
 
     return contract
-      .invoke('generate_planet', [])
+      .invoke('generatePlanet', [])
       .then((tx: AddTransactionResponse) => {
         console.log('Transaction hash: ', tx.transaction_hash)
 

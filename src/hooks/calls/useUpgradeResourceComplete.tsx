@@ -4,7 +4,7 @@ import { AddTransactionResponse } from 'starknet'
 import { useS2MTransactionManager } from '~/providers/transaction'
 import { useGameContract } from '../game'
 
-export type ResourceType = 'metal' | 'crystal' | 'deuterium' | 'solar_plant' | 'robot_factory'
+export type ResourceType = 'metal' | 'crystal' | 'deuterium' | 'solar' | 'robot' | 'shipyard' | 'research' | 'nanite'
 
 export default function useCompleteResource(resourceName: ResourceType) {
   const { account } = useStarknet()
@@ -18,7 +18,7 @@ export default function useCompleteResource(resourceName: ResourceType) {
     }
 
     return contract
-      .invoke(`${resourceName}_upgrade_complete`, [])
+      .invoke(`${resourceName}UpgradeComplete`, [])
       .then((tx: AddTransactionResponse) => {
         console.log('Transaction hash: ', tx.transaction_hash)
 

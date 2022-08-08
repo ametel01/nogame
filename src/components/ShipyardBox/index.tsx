@@ -4,11 +4,13 @@ import { Clock } from '~/components/Icons/Clock'
 import { Coins } from '~/components/Icons/Coins'
 import { ButtonPrimary } from '~/components/Button'
 import Image from 'next/image'
-import useUpgradeResourceStart, { ResourceType } from '~/hooks/calls/useUpgradeResourceStart'
-import useUpgradeResourceComplete from '~/hooks/calls/useUpgradeResourceComplete'
+
 import plus from '~/assets/icons/Plus.svg'
 import Column from '../Column'
 import React, { useMemo } from 'react'
+import useBuildShipStart, { ShipType } from '~/hooks/calls/useBuildShipsStart'
+import useBuildShipComplete from '~/hooks/calls/useBuildShipsComplete'
+import useCollectResources from '~/hooks/calls/useCollectResources'
 
 const Box = styled.div<{ customColor: string }>`
   width: 100%;
@@ -87,10 +89,10 @@ const ButtonContainer = styled.div`
 interface Props {
   img: any
   title: string
-  functionCallName: ResourceType
+  functionCallName: ShipType
   level?: number
   time?: number
-  costUpdate?: { metal: number; crystal: number; energy: number }
+  costUpdate?: { metal: number; crystal: number; deuterium: number }
   hasEnoughResources?: boolean
   isUpgrading?: boolean
 }
@@ -115,9 +117,9 @@ const ResourceBox = ({
   time,
   isUpgrading,
 }: Props) => {
-  const upgrade = useUpgradeResourceStart(functionCallName)
-  const complete = useUpgradeResourceComplete(functionCallName)
-  //const collectResources = useCollectResources()
+  const upgrade = useBuildShipStart(functionCallName)
+  const complete = useBuildShipComplete(functionCallName)
+  const collectResources = useCollectResources()
 
   const buttonState = useMemo((): ButtonState => {
     if (!hasEnoughResources) {
@@ -204,10 +206,10 @@ const ResourceBox = ({
             </NumberContainer>
           </ResourceContainer>
           <ResourceContainer>
-            <ResourceTitle>ENERGY REQUIRED</ResourceTitle>
+            <ResourceTitle>DEUTERIUM COST</ResourceTitle>
             <NumberContainer>
               <Coins />
-              {costUpdate?.energy}
+              {costUpdate?.deuterium}
             </NumberContainer>
           </ResourceContainer>
         </InfoContainer>

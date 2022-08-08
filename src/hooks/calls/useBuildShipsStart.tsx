@@ -4,9 +4,16 @@ import { AddTransactionResponse } from 'starknet'
 import { useS2MTransactionManager } from '~/providers/transaction'
 import { useGameContract } from '../game'
 
-export type ResourceType = 'metal' | 'crystal' | 'deuterium' | 'solar' | 'robot' | 'shipyard' | 'research' | 'nanite'
+export type ShipType =
+  | 'cargoShip'
+  | 'recycler'
+  | 'espionageProbe'
+  | 'solarSatellite'
+  | 'lightFighter'
+  | 'cruiser'
+  | 'battleShip'
 
-export default function useUpgradeResourceStart(resourceName: ResourceType) {
+export default function useBuildShipStart(shipName: ShipType) {
   const { account } = useStarknet()
   const { contract } = useGameContract()
 
@@ -18,7 +25,7 @@ export default function useUpgradeResourceStart(resourceName: ResourceType) {
     }
 
     return contract
-      .invoke(`${resourceName}UpgradeStart`, [])
+      .invoke(`${shipName}BuildStart`, [])
       .then((tx: AddTransactionResponse) => {
         console.log('Transaction hash: ', tx.transaction_hash)
 
@@ -26,7 +33,7 @@ export default function useUpgradeResourceStart(resourceName: ResourceType) {
           status: tx.code,
           transactionHash: tx.transaction_hash,
           address: account,
-          summary: `Upgrade ${resourceName}`,
+          summary: `Upgrade ${shipName}`,
         })
 
         return tx.transaction_hash

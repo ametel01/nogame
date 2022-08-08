@@ -1,5 +1,6 @@
 import { useStarknet, useStarknetCall } from '@starknet-react/core'
 import { useGameContract } from '~/hooks/game'
+import { useMetalContract, useCrystalContract, useDeuteriumContract } from '~/hooks/erc20'
 import { useMemo, useState } from 'react'
 import { BigNumber } from 'bignumber.js'
 import { uint256 } from 'starknet'
@@ -106,42 +107,49 @@ const Resource = ({ total, img, iconImg, title, address }: Props) => {
 
 const ResourcesContainer = () => {
   const { account } = useStarknet()
-  const { contract } = useGameContract()
-  const { data } = useStarknetCall({
+  const { contract } = useMetalContract()
+  const { data: metalData } = useStarknetCall({
     contract,
-    method: 'resources_available',
+    method: 'balanceOf',
     args: [account],
   })
 
+  // const { contract } = useCrystalContract()
+  // const { data: crystalData } = useStarknetCall({
+  //   contract,
+  //   method: 'balanceOf',
+  //   args: [account],
+  // })
+
   const points = useMemo(() => {
-    if (data) {
+    if (metalData) {
       return {
-        metal: dataToNumber(data['metal']),
-        crystal: dataToNumber(data['crystal']),
-        deuterium: dataToNumber(data['deuterium']),
-        energy: dataToNumber(data['energy']),
+        metal: dataToNumber(metalData['balance']),
+        crystal: dataToNumber(metalData['balance']),
+        deuterium: dataToNumber(metalData['balance']),
+        energy: dataToNumber(metalData['balance']),
       }
     }
-  }, [data])
+  }, [metalData])
   return (
     <div>
       <Resource
         title="Metal"
-        address="0x043d8d23118a2fa64325a0b0a5606a67b30253cdb334c8fd75b270aba08c25ab"
+        address="0x01d113c79ac4828e4a6dd910e4b3da97f77c141900f62f7bf4a5052c08a99cfa"
         img={iron}
         iconImg={coins}
         total={points?.metal}
       />
       <Resource
         title="Crystal"
-        address="0x014a7a59e3e2d058d4c7c868e05907b2b49e324cc5b6af71182f008feb939e91"
+        address="0x047ddc05aa8247073b534e1a3bc5dde5fbfb03a42f7a59a9abf2f71f3acf0bbf"
         img={crystal}
         iconImg={gem}
         total={points?.crystal}
       />
       <Resource
         title="Deuterium"
-        address="0x03d4a1f4c738abdb692c5a150267afb975998a311883a67db3bcf218babe41d6"
+        address="0x02180ef049384f9746dd06de79a47d0e3ba07f28f9818def03ed1e718f5e2ac5"
         img={deuterium}
         iconImg={atom}
         total={points?.deuterium}

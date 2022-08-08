@@ -70,9 +70,7 @@ function hex2a(hex: string) {
 const PlanetImage = ({ planetId }: { planetId: any }) => {
   const ipfsUrl = 'https://gateway.pinata.cloud/ipfs/'
   const [metadata, setMetadata] = useState<any>()
-  const { contract: ercContract } = useErc721Contract(
-    `0x0651853aabaf78f1f1501bf082b42aad992ed99c61892bc0e5ac2ab5d03d11b8`
-  )
+  const { contract: ercContract } = useErc721Contract()
   const { data } = useStarknetCall({
     contract: ercContract,
     method: 'tokenURI',
@@ -146,14 +144,14 @@ const PlanetImage = ({ planetId }: { planetId: any }) => {
 
 export const PlanetSection: FC = () => {
   const { account } = useStarknet()
-  const { contract: gameContract } = useGameContract()
+  const { contract: erc721Contract } = useErc721Contract()
   const { data } = useStarknetCall({
-    contract: gameContract,
-    method: 'owner_of',
+    contract: erc721Contract,
+    method: 'ownerToPlanet',
     args: [account],
   })
 
-  const planetId = data && data['planet_id']
+  const planetId = data && data['token_id']
 
   return (
     <RowCentered>

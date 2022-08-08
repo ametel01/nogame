@@ -6,6 +6,7 @@ import { BigNumber } from 'bignumber.js'
 import React, { useEffect, useMemo, useState } from 'react'
 import { S2MTransactionManagerProvider } from '~/providers/transaction'
 import { useGameContract } from '~/hooks/game'
+import { useErc721Contract } from '~/hooks/erc721'
 import Popups from '~/components/Popups'
 import { AppWrapper } from '~/components/Core/AppWrapper'
 import useGeneratePlanet from '~/hooks/calls/useGeneratePlanet'
@@ -33,18 +34,18 @@ const AuthController = ({ Component, pageProps }: AppProps) => {
     }, 2500)
   }, [walletConnectLoading])
 
-  const { contract: gameContract } = useGameContract()
+  const { contract: erc721Contract } = useErc721Contract()
   // Not sure about the returned result of this call, if 0 then no planet?
   const { data, error, loading } = useStarknetCall({
-    contract: gameContract,
-    method: 'owner_of',
+    contract: erc721Contract,
+    method: 'ownerToPlanet',
     args: [account],
   })
   const generatePlanet = useGeneratePlanet()
 
   const hasGeneratedPlanets = useMemo(() => {
     if (data) {
-      const planetIdBN = new BigNumber(uint256.uint256ToBN(data['planet_id'])).toNumber()
+      const planetIdBN = new BigNumber(uint256.uint256ToBN(data['token_id'])).toNumber()
 
       return planetIdBN > 0
     }

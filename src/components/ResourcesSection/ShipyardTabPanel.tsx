@@ -1,13 +1,15 @@
 import { StyledTabPanel } from './styleds'
-import ResourceBox from '~/components/ResourceBox'
-
-import MetalImg from '~/assets/resources/metal.jpg'
-import CrystalImg from '~/assets/resources/crystal.jpg'
-import DeuteriumImg from '~/assets/resources/deuterium.jpg'
-import SolarPlantImg from '~/assets/resources/solar_plant.jpg'
-import { CostUpgrade, ResourceLevels, Points, EndTimeCompletion } from '~/utils/types'
-import { calculEnoughResources } from '~/utils'
 import { useState } from 'react'
+import { CostUpgrade, EndTimeCompletion, Points, ResourceLevels } from '~/utils/types'
+import ResourceBox from '~/components/ResourceBox'
+import { calculEnoughResources } from '~/utils'
+import BattleshipImg from '~/assets/shipyard/battleship.jpg'
+import CruiserImg from '~/assets/shipyard/cruiser.jpg'
+import ProbeImg from '~/assets/shipyard/espionage_probe.jpg'
+import CargoImg from '~/assets/shipyard/light_cargo.jpg'
+import FighterImg from '~/assets/shipyard/light_fighter.jpg'
+import RecyclerImg from '~/assets/shipyard/recycler.jpg'
+import SatelliteImg from '~/assets/shipyard/solar_satellite.jpg'
 
 interface Props {
   endTimeCompletion?: EndTimeCompletion
@@ -16,7 +18,7 @@ interface Props {
   costUpgrade?: CostUpgrade
 }
 
-export const ResourceTabPanel = ({
+export const ShipyardTabPanel = ({
   endTimeCompletion,
   playerResources,
   resourceLevels,
@@ -37,8 +39,8 @@ export const ResourceTabPanel = ({
   return (
     <StyledTabPanel {...rest}>
       <ResourceBox
-        img={MetalImg}
-        title="Metal Mine"
+        img={CargoImg}
+        title="Light Cargo"
         functionCallName="metal"
         level={resourceLevels?.metal}
         time={getEndTime(1)}
@@ -47,8 +49,8 @@ export const ResourceTabPanel = ({
         hasEnoughResources={playerResources && costUpgrade && calculEnoughResources(costUpgrade.metal, playerResources)}
       />
       <ResourceBox
-        img={CrystalImg}
-        title="Crystal Mine"
+        img={ProbeImg}
+        title="Espionage Probe"
         functionCallName="crystal"
         level={resourceLevels?.crystal}
         time={getEndTime(2)}
@@ -59,8 +61,8 @@ export const ResourceTabPanel = ({
         }
       />
       <ResourceBox
-        img={DeuteriumImg}
-        title="Deuterium Mine"
+        img={SatelliteImg}
+        title="Solar Satellite"
         functionCallName="deuterium"
         level={resourceLevels?.deuterium}
         time={getEndTime(3)}
@@ -71,9 +73,45 @@ export const ResourceTabPanel = ({
         }
       />
       <ResourceBox
-        img={SolarPlantImg}
-        title="Solar Plant"
-        functionCallName="solar"
+        img={FighterImg}
+        title="Light Fighter"
+        functionCallName="solar_plant"
+        level={resourceLevels?.solarPlant}
+        time={getEndTime(4)}
+        costUpdate={costUpgrade?.solarPlant}
+        isUpgrading={isUpgrading}
+        hasEnoughResources={
+          playerResources && costUpgrade && calculEnoughResources(costUpgrade.solarPlant, playerResources)
+        }
+      />
+      <ResourceBox
+        img={RecyclerImg}
+        title="Recycler"
+        functionCallName="solar_plant"
+        level={resourceLevels?.solarPlant}
+        time={getEndTime(4)}
+        costUpdate={costUpgrade?.solarPlant}
+        isUpgrading={isUpgrading}
+        hasEnoughResources={
+          playerResources && costUpgrade && calculEnoughResources(costUpgrade.solarPlant, playerResources)
+        }
+      />
+      <ResourceBox
+        img={CruiserImg}
+        title="Cruiser"
+        functionCallName="solar_plant"
+        level={resourceLevels?.solarPlant}
+        time={getEndTime(4)}
+        costUpdate={costUpgrade?.solarPlant}
+        isUpgrading={isUpgrading}
+        hasEnoughResources={
+          playerResources && costUpgrade && calculEnoughResources(costUpgrade.solarPlant, playerResources)
+        }
+      />
+      <ResourceBox
+        img={BattleshipImg}
+        title="Battle Ship"
+        functionCallName="solar_plant"
         level={resourceLevels?.solarPlant}
         time={getEndTime(4)}
         costUpdate={costUpgrade?.solarPlant}
@@ -86,4 +124,4 @@ export const ResourceTabPanel = ({
   )
 }
 
-ResourceTabPanel.tabsRole = 'TabPanel'
+ShipyardTabPanel.tabsRole = 'TabPanel'
