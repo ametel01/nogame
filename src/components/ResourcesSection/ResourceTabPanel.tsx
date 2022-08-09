@@ -5,7 +5,7 @@ import MetalImg from '~/assets/resources/metal.jpg'
 import CrystalImg from '~/assets/resources/crystal.jpg'
 import DeuteriumImg from '~/assets/resources/deuterium.jpg'
 import SolarPlantImg from '~/assets/resources/solar_plant.jpg'
-import { CostUpgrade, ResourceLevels, Points, EndTimeCompletion } from '~/utils/types'
+import { ResourcesCostUpgrade, ResourceLevels, Points, EndTimeCompletion } from '~/utils/types'
 import { calculEnoughResources } from '~/utils'
 import { useState } from 'react'
 
@@ -13,14 +13,14 @@ interface Props {
   endTimeCompletion?: EndTimeCompletion
   playerResources?: Points
   resourceLevels?: ResourceLevels
-  costUpgrade?: CostUpgrade
+  ResourcesCostUpgrade?: ResourcesCostUpgrade
 }
 
 export const ResourceTabPanel = ({
   endTimeCompletion,
   playerResources,
   resourceLevels,
-  costUpgrade,
+  ResourcesCostUpgrade,
   ...rest
 }: Props) => {
   const [isUpgrading, setIsUpgrading] = useState(false)
@@ -43,8 +43,10 @@ export const ResourceTabPanel = ({
         level={resourceLevels?.metal}
         time={getEndTime(1)}
         isUpgrading={isUpgrading}
-        costUpdate={costUpgrade?.metal}
-        hasEnoughResources={playerResources && costUpgrade && calculEnoughResources(costUpgrade.metal, playerResources)}
+        costUpdate={ResourcesCostUpgrade?.metal}
+        hasEnoughResources={
+          playerResources && ResourcesCostUpgrade && calculEnoughResources(ResourcesCostUpgrade.metal, playerResources)
+        }
       />
       <ResourceBox
         img={CrystalImg}
@@ -52,10 +54,12 @@ export const ResourceTabPanel = ({
         functionCallName="crystal"
         level={resourceLevels?.crystal}
         time={getEndTime(2)}
-        costUpdate={costUpgrade?.crystal}
+        costUpdate={ResourcesCostUpgrade?.crystal}
         isUpgrading={isUpgrading}
         hasEnoughResources={
-          playerResources && costUpgrade && calculEnoughResources(costUpgrade.crystal, playerResources)
+          playerResources &&
+          ResourcesCostUpgrade &&
+          calculEnoughResources(ResourcesCostUpgrade.crystal, playerResources)
         }
       />
       <ResourceBox
@@ -64,10 +68,12 @@ export const ResourceTabPanel = ({
         functionCallName="deuterium"
         level={resourceLevels?.deuterium}
         time={getEndTime(3)}
-        costUpdate={costUpgrade?.deuterium}
+        costUpdate={ResourcesCostUpgrade?.deuterium}
         isUpgrading={isUpgrading}
         hasEnoughResources={
-          playerResources && costUpgrade && calculEnoughResources(costUpgrade.deuterium, playerResources)
+          playerResources &&
+          ResourcesCostUpgrade &&
+          calculEnoughResources(ResourcesCostUpgrade.deuterium, playerResources)
         }
       />
       <ResourceBox
@@ -76,10 +82,12 @@ export const ResourceTabPanel = ({
         functionCallName="solar"
         level={resourceLevels?.solarPlant}
         time={getEndTime(4)}
-        costUpdate={costUpgrade?.solarPlant}
+        costUpdate={ResourcesCostUpgrade?.solarPlant}
         isUpgrading={isUpgrading}
         hasEnoughResources={
-          playerResources && costUpgrade && calculEnoughResources(costUpgrade.solarPlant, playerResources)
+          playerResources &&
+          ResourcesCostUpgrade &&
+          calculEnoughResources(ResourcesCostUpgrade.solarPlant, playerResources)
         }
       />
     </StyledTabPanel>

@@ -1,7 +1,7 @@
 import { StyledTabPanel } from './styleds'
 import styled from 'styled-components'
-import { CostUpgrade, EndTimeCompletion, Points, ResourceLevels } from '~/utils/types'
-import ResourceBox from '~/components/ResourceBox'
+import { FacilitiesCostUpgrade, EndTimeCompletion, Points, FacilitiesLevels } from '~/utils/types'
+import FacilitiesBox from '../FacilitiesBox'
 import RobotImg from '~/assets/facilities/robot_factory.jpg'
 import ShipyardImg from '~/assets/facilities/shipyard.jpg'
 import ResearchLabImg from '~/assets/facilities/research_lab.jpg'
@@ -9,37 +9,37 @@ import NaniteImg from '~/assets/facilities/nanite_factory.jpg'
 import { calculEnoughResources } from '~/utils'
 import { useState } from 'react'
 
-const EmptyBox = styled.div`
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  background-color: #363636;
-  max-width: 200px;
-  height: 150px;
-  border-radius: 5px;
-`
+// const EmptyBox = styled.div`
+//   display: flex;
+//   flex: 1;
+//   justify-content: center;
+//   align-items: center;
+//   background-color: #363636;
+//   max-width: 200px;
+//   height: 150px;
+//   border-radius: 5px;
+// `
 
-const EmptyContainer = styled.div`
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`
+// const EmptyContainer = styled.div`
+//   display: flex;
+//   flex: 1;
+//   justify-content: center;
+//   align-items: center;
+//   width: 100%;
+//   height: 100%;
+// `
 interface Props {
   endTimeCompletion?: EndTimeCompletion
   playerResources?: Points
-  resourceLevels?: ResourceLevels
-  costUpgrade?: CostUpgrade
+  facilitiesLevels?: FacilitiesLevels
+  FacilitiesCostUpgrade?: FacilitiesCostUpgrade
 }
 
 export const FacilitiesTabPanel = ({
   endTimeCompletion,
   playerResources,
-  resourceLevels,
-  costUpgrade,
+  facilitiesLevels,
+  FacilitiesCostUpgrade,
   ...rest
 }: Props) => {
   const [isUpgrading, setIsUpgrading] = useState(false)
@@ -54,52 +54,58 @@ export const FacilitiesTabPanel = ({
   }
   return (
     <StyledTabPanel {...rest}>
-      <ResourceBox
+      <FacilitiesBox
         img={RobotImg}
         title="Robot Factory"
         functionCallName="robot"
-        level={resourceLevels?.robotFactory}
+        level={facilitiesLevels?.robots}
         time={getEndTime(5)}
-        costUpdate={costUpgrade?.robotFactory}
+        costUpdate={FacilitiesCostUpgrade?.robots}
         isUpgrading={isUpgrading}
         hasEnoughResources={
-          playerResources && costUpgrade && calculEnoughResources(costUpgrade.robotFactory, playerResources)
+          playerResources &&
+          FacilitiesCostUpgrade &&
+          calculEnoughResources(FacilitiesCostUpgrade.robots, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={ShipyardImg}
         title="Shipyard"
         functionCallName="shipyard"
-        level={resourceLevels?.robotFactory}
+        level={facilitiesLevels?.shipyard}
         time={getEndTime(5)}
-        costUpdate={costUpgrade?.robotFactory}
+        costUpdate={FacilitiesCostUpgrade?.shipyard}
         isUpgrading={isUpgrading}
         hasEnoughResources={
-          playerResources && costUpgrade && calculEnoughResources(costUpgrade.robotFactory, playerResources)
+          playerResources &&
+          FacilitiesCostUpgrade &&
+          calculEnoughResources(FacilitiesCostUpgrade.shipyard, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={ResearchLabImg}
         title="Research Lab"
         functionCallName="research"
-        level={resourceLevels?.robotFactory}
+        level={facilitiesLevels?.lab}
         time={getEndTime(5)}
-        costUpdate={costUpgrade?.robotFactory}
+        costUpdate={FacilitiesCostUpgrade?.lab}
         isUpgrading={isUpgrading}
         hasEnoughResources={
-          playerResources && costUpgrade && calculEnoughResources(costUpgrade.robotFactory, playerResources)
+          playerResources && FacilitiesCostUpgrade && calculEnoughResources(FacilitiesCostUpgrade.lab, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={NaniteImg}
         title="Nanite Factory"
         functionCallName="nanite"
-        level={resourceLevels?.robotFactory}
+        level={facilitiesLevels?.nanite}
         time={getEndTime(5)}
-        costUpdate={costUpgrade?.robotFactory}
+        costUpdate={FacilitiesCostUpgrade?.nanite}
         isUpgrading={isUpgrading}
         hasEnoughResources={
-          playerResources && costUpgrade && calculEnoughResources(costUpgrade.robotFactory, playerResources)
+          playerResources &&
+          FacilitiesCostUpgrade &&
+          calculEnoughResources(FacilitiesCostUpgrade.nanite, playerResources)
         }
       />
     </StyledTabPanel>

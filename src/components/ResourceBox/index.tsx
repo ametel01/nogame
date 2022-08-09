@@ -90,7 +90,7 @@ interface Props {
   functionCallName: ResourceType
   level?: number
   time?: number
-  costUpdate?: { metal: number; crystal: number; energy: number }
+  costUpdate?: { metal: number; crystal: number; deuterium: number; energy: number }
   hasEnoughResources?: boolean
   isUpgrading?: boolean
 }
