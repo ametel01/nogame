@@ -16,7 +16,7 @@ export default function useCollectResources() {
     }
 
     return contract
-      .invoke('collect_resources', [])
+      .invoke('collectResources', [])
       .then((tx: AddTransactionResponse) => {
         console.log('Transaction hash: ', tx.transaction_hash)
 
