@@ -16,7 +16,7 @@ import coins from '../../assets/icons/Coins.svg'
 import gem from '../../assets/icons/Gem.svg'
 import atom from '../../assets/icons/Atom.svg'
 import bolt from '../../assets/icons/Bolt.svg'
-import { dataToNumber } from '~/utils'
+import { dataToNumber, E18ToNumber } from '~/utils'
 
 const Container = styled.div`
   //width: 250px;
@@ -107,30 +107,23 @@ const Resource = ({ total, img, iconImg, title, address }: Props) => {
 
 const ResourcesContainer = () => {
   const { account } = useStarknet()
-  const { contract } = useMetalContract()
-  const { data: metalData } = useStarknetCall({
-    contract,
-    method: 'balanceOf',
+  const { contract: gameContract } = useGameContract()
+  const { data: res } = useStarknetCall({
+    contract: gameContract,
+    method: 'getResourcesAvailable',
     args: [account],
   })
 
-  // const { contract } = useCrystalContract()
-  // const { data: crystalData } = useStarknetCall({
-  //   contract,
-  //   method: 'balanceOf',
-  //   args: [account],
-  // })
-
-  const points = useMemo(() => {
-    if (metalData) {
+  const resources = useMemo(() => {
+    if (res) {
       return {
-        metal: dataToNumber(metalData['balance']),
-        crystal: dataToNumber(metalData['balance']),
-        deuterium: dataToNumber(metalData['balance']),
-        energy: dataToNumber(metalData['balance']),
+        metal: E18ToNumber(res['metal']),
+        crystal: E18ToNumber(res['crystal']),
+        deuterium: E18ToNumber(res['deuterium']),
+        energy: dataToNumber(res['energy']),
       }
     }
-  }, [metalData])
+  }, [res])
   return (
     <div>
       <Resource
@@ -138,23 +131,23 @@ const ResourcesContainer = () => {
         address="0x01d113c79ac4828e4a6dd910e4b3da97f77c141900f62f7bf4a5052c08a99cfa"
         img={iron}
         iconImg={coins}
-        total={points?.metal}
+        total={resources?.metal}
       />
       <Resource
         title="Crystal"
         address="0x047ddc05aa8247073b534e1a3bc5dde5fbfb03a42f7a59a9abf2f71f3acf0bbf"
         img={crystal}
         iconImg={gem}
-        total={points?.crystal}
+        total={resources?.crystal}
       />
       <Resource
         title="Deuterium"
         address="0x02180ef049384f9746dd06de79a47d0e3ba07f28f9818def03ed1e718f5e2ac5"
         img={deuterium}
         iconImg={atom}
-        total={points?.deuterium}
+        total={resources?.deuterium}
       />
-      <Resource title="Energy" img={energy} iconImg={bolt} total={points?.energy} />
+      <Resource title="Energy" address="" img={energy} iconImg={bolt} total={resources?.energy} />
     </div>
   )
 }

@@ -57,7 +57,7 @@ const LogoAndRankContainer = () => {
   const { contract } = useGameContract()
   const { data } = useStarknetCall({
     contract,
-    method: 'player_points',
+    method: 'getPlayerPoints',
     args: [account],
   })
 
