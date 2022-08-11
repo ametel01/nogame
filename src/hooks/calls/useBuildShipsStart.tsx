@@ -24,22 +24,25 @@ export default function useBuildShipStart(shipName: ShipType) {
       throw new Error('Missing Dependencies')
     }
 
-    return contract
-      .invoke(`${shipName}BuildStart`, [])
-      .then((tx: AddTransactionResponse) => {
-        console.log('Transaction hash: ', tx.transaction_hash)
+    return (
+      contract
+        // TODO: implement form box to get user amuont of ships to build
+        .invoke(`${shipName}BuildStart`, [1])
+        .then((tx: AddTransactionResponse) => {
+          console.log('Transaction hash: ', tx.transaction_hash)
 
-        addTransaction({
-          status: tx.code,
-          transactionHash: tx.transaction_hash,
-          address: account,
-          summary: `Upgrade ${shipName}`,
+          addTransaction({
+            status: tx.code,
+            transactionHash: tx.transaction_hash,
+            address: account,
+            summary: `Upgrade ${shipName}`,
+          })
+
+          return tx.transaction_hash
         })
-
-        return tx.transaction_hash
-      })
-      .catch((e) => {
-        console.error(e)
-      })
+        .catch((e) => {
+          console.error(e)
+        })
+    )
   }, [account, addTransaction, contract])
 }
