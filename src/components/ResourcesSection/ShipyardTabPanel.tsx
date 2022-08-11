@@ -2,6 +2,7 @@ import { StyledTabPanel } from './styleds'
 import { useState } from 'react'
 import { FleetCost, EndTimeCompletion, Points, FleetLevels } from '~/utils/types'
 import ResourceBox from '~/components/ResourceBox'
+import ShipyardBox from '../ShipyardBox'
 import { calculEnoughResources } from '~/utils'
 import BattleshipImg from '~/assets/shipyard/battleship.jpg'
 import CruiserImg from '~/assets/shipyard/cruiser.jpg'
@@ -32,72 +33,72 @@ export const ShipyardTabPanel = ({ endTimeCompletion, playerResources, fleetLeve
 
   return (
     <StyledTabPanel {...rest}>
-      <ResourceBox
+      <ShipyardBox
         img={CargoImg}
         title="Light Cargo"
         functionCallName="cargoShip"
         level={fleetLevels?.cargo}
-        time={getEndTime(1)}
+        time={getEndTime(31)}
         isUpgrading={isUpgrading}
         costUpdate={FleetCost?.cargo}
         hasEnoughResources={playerResources && FleetCost && calculEnoughResources(FleetCost.cargo, playerResources)}
       />
-      <ResourceBox
+      <ShipyardBox
         img={ProbeImg}
         title="Espionage Probe"
         functionCallName="espionageProbe"
         level={fleetLevels?.probe}
-        time={getEndTime(2)}
+        time={getEndTime(33)}
         costUpdate={FleetCost?.probe}
         isUpgrading={isUpgrading}
         hasEnoughResources={playerResources && FleetCost && calculEnoughResources(FleetCost.probe, playerResources)}
       />
-      <ResourceBox
+      <ShipyardBox
         img={SatelliteImg}
         title="Solar Satellite"
         functionCallName="solarSatellite"
         level={fleetLevels?.satellite}
-        time={getEndTime(3)}
+        time={getEndTime(34)}
         costUpdate={FleetCost?.satellite}
         isUpgrading={isUpgrading}
         hasEnoughResources={playerResources && FleetCost && calculEnoughResources(FleetCost.satellite, playerResources)}
       />
-      <ResourceBox
+      <ShipyardBox
         img={FighterImg}
         title="Light Fighter"
         functionCallName="lightFighter"
         level={fleetLevels?.fighter}
-        time={getEndTime(4)}
+        time={getEndTime(35)}
         costUpdate={FleetCost?.fighter}
         isUpgrading={isUpgrading}
         hasEnoughResources={playerResources && FleetCost && calculEnoughResources(FleetCost.fighter, playerResources)}
       />
-      <ResourceBox
+      <ShipyardBox
         img={RecyclerImg}
         title="Recycler"
-        functionCallName="recyclerShip"
+        functionCallName="recycler"
         level={fleetLevels?.recycler}
-        time={getEndTime(4)}
+        time={getEndTime(32)}
         costUpdate={FleetCost?.recycler}
         isUpgrading={isUpgrading}
         hasEnoughResources={playerResources && FleetCost && calculEnoughResources(FleetCost.recycler, playerResources)}
       />
-      <ResourceBox
+      <ShipyardBox
         img={CruiserImg}
         title="Cruiser"
-        functionCallName="cruiserBuild"
+        functionCallName="cruiser"
         level={fleetLevels?.cruiser}
-        time={getEndTime(4)}
+        time={getEndTime(36)}
         costUpdate={FleetCost?.cruiser}
         isUpgrading={isUpgrading}
         hasEnoughResources={playerResources && FleetCost && calculEnoughResources(FleetCost.cruiser, playerResources)}
       />
-      <ResourceBox
+      <ShipyardBox
         img={BattleshipImg}
         title="Battle Ship"
         functionCallName="battleShip"
         level={fleetLevels?.battleship}
-        time={getEndTime(4)}
+        time={getEndTime(37)}
         costUpdate={FleetCost?.battleship}
         isUpgrading={isUpgrading}
         hasEnoughResources={
