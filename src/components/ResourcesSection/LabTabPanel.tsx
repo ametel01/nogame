@@ -1,7 +1,7 @@
 import { StyledTabPanel } from './styleds'
 import { useState } from 'react'
 import { TechCostUpgrade, EndTimeCompletion, Points, TechLevels } from '~/utils/types'
-import ResourceBox from '~/components/ResourceBox'
+import FacilitiesBox from '../FacilitiesBox'
 import { calculEnoughResources } from '~/utils'
 import ArmourImg from '~/assets/research_lab/armour_tech.jpg'
 import AstrophysicsImg from '~/assets/research_lab/astrophysics.jpg'
@@ -44,168 +44,168 @@ export const ResearchTabPanel = ({
   }
   return (
     <StyledTabPanel {...rest}>
-      <ResourceBox
+      <FacilitiesBox
         img={ArmourImg}
         title="Armour Tech"
         functionCallName="armourTech"
         level={techLevels?.armour}
-        time={getEndTime(5)}
+        time={getEndTime(11)}
         costUpdate={TechCostUpgrade?.armour}
         isUpgrading={isUpgrading}
         hasEnoughResources={
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.armour, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={AstrophysicsImg}
         title="Astrophysics"
         functionCallName="astrophysics"
         level={techLevels?.astrophysics}
-        time={getEndTime(5)}
+        time={getEndTime(12)}
         costUpdate={TechCostUpgrade?.astrophysics}
         isUpgrading={isUpgrading}
         hasEnoughResources={
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.astrophysics, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={CombustionImg}
         title="Combustion Drive"
         functionCallName="combustionDrive"
         level={techLevels?.combustion}
-        time={getEndTime(5)}
+        time={getEndTime(13)}
         costUpdate={TechCostUpgrade?.combustion}
         isUpgrading={isUpgrading}
         hasEnoughResources={
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.combustion, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={ComputerImg}
         title="Computer Tech"
         functionCallName="computerTech"
         level={techLevels?.computer}
-        time={getEndTime(5)}
+        time={getEndTime(14)}
         costUpdate={TechCostUpgrade?.computer}
         isUpgrading={isUpgrading}
         hasEnoughResources={
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.computer, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={EnergyImg}
         title="Energy Tech"
         functionCallName="energyTech"
         level={techLevels?.energy}
-        time={getEndTime(5)}
+        time={getEndTime(15)}
         costUpdate={TechCostUpgrade?.energy}
         isUpgrading={isUpgrading}
         hasEnoughResources={
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.energy, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={EspionageImg}
         title="Espionage Tech"
         functionCallName="espionageTech"
         level={techLevels?.espionage}
-        time={getEndTime(5)}
+        time={getEndTime(16)}
         costUpdate={TechCostUpgrade?.espionage}
         isUpgrading={isUpgrading}
         hasEnoughResources={
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.espionage, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={HyperspaceDriveImg}
         title="Hyperspace Drive"
         functionCallName="hyperspaceDrive"
         level={techLevels?.hyperspaceDrive}
-        time={getEndTime(5)}
+        time={getEndTime(17)}
         costUpdate={TechCostUpgrade?.hyperspaceDrive}
         isUpgrading={isUpgrading}
         hasEnoughResources={
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.hyperspaceDrive, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={HyperspaceTechImg}
         title="Hyperspace Tech"
         functionCallName="hyperspaceTech"
         level={techLevels?.hyperspaceTech}
-        time={getEndTime(5)}
+        time={getEndTime(18)}
         costUpdate={TechCostUpgrade?.hyperspaceTech}
         isUpgrading={isUpgrading}
         hasEnoughResources={
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.hyperspaceTech, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={ImpulseImg}
         title="Impulse Drive"
         functionCallName="impulseDrive"
         level={techLevels?.impulse}
-        time={getEndTime(5)}
+        time={getEndTime(19)}
         costUpdate={TechCostUpgrade?.impulse}
         isUpgrading={isUpgrading}
         hasEnoughResources={
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.impulse, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={IonImg}
         title="Ion Tech"
         functionCallName="ionTech"
         level={techLevels?.ion}
-        time={getEndTime(5)}
+        time={getEndTime(20)}
         costUpdate={TechCostUpgrade?.ion}
         isUpgrading={isUpgrading}
         hasEnoughResources={
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.ion, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={LaserImg}
         title="Laser Tech"
         functionCallName="laserTech"
         level={techLevels?.laser}
-        time={getEndTime(5)}
+        time={getEndTime(21)}
         costUpdate={TechCostUpgrade?.laser}
         isUpgrading={isUpgrading}
         hasEnoughResources={
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.laser, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={PlasmaImg}
         title="Plasma Tech"
         functionCallName="plasmaTech"
         level={techLevels?.plasma}
-        time={getEndTime(5)}
+        time={getEndTime(22)}
         costUpdate={TechCostUpgrade?.plasma}
         isUpgrading={isUpgrading}
         hasEnoughResources={
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.plasma, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={ShieldingImg}
         title="Shielding Tech"
         functionCallName="shieldingTech"
         level={techLevels?.shielding}
-        time={getEndTime(5)}
+        time={getEndTime(23)}
         costUpdate={TechCostUpgrade?.shielding}
         isUpgrading={isUpgrading}
         hasEnoughResources={
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.shielding, playerResources)
         }
       />
-      <ResourceBox
+      <FacilitiesBox
         img={WeaponsImg}
         title="Weapons Tech"
         functionCallName="weaponsTech"
         level={techLevels?.weapons}
-        time={getEndTime(5)}
+        time={getEndTime(24)}
         costUpdate={TechCostUpgrade?.weapons}
         isUpgrading={isUpgrading}
         hasEnoughResources={
