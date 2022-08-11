@@ -107,7 +107,7 @@ interface ButtonArrayStates {
   icon: React.ReactNode
 }
 
-const ResourceBox = ({
+const ShipyardBox = ({
   img,
   title,
   level,
@@ -230,4 +230,4 @@ const ResourceBox = ({
   )
 }
 
-export default ResourceBox
+export default ShipyardBox

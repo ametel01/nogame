@@ -16,7 +16,7 @@ import coins from '../../assets/icons/Coins.svg'
 import gem from '../../assets/icons/Gem.svg'
 import atom from '../../assets/icons/Atom.svg'
 import bolt from '../../assets/icons/Bolt.svg'
-import { dataToNumber, E18ToNumber } from '~/utils'
+import { dataToNumber, E18ToNumber, numberWithCommas } from '~/utils'
 
 const Container = styled.div`
   //width: 250px;
@@ -117,10 +117,10 @@ const ResourcesContainer = () => {
   const resources = useMemo(() => {
     if (res) {
       return {
-        metal: E18ToNumber(res['metal']),
-        crystal: E18ToNumber(res['crystal']),
-        deuterium: E18ToNumber(res['deuterium']),
-        energy: dataToNumber(res['energy']),
+        metal: numberWithCommas(E18ToNumber(res['metal'])),
+        crystal: numberWithCommas(E18ToNumber(res['crystal'])),
+        deuterium: numberWithCommas(E18ToNumber(res['deuterium'])),
+        energy: numberWithCommas(dataToNumber(res['energy'])),
       }
     }
   }, [res])
