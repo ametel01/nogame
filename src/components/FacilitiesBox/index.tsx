@@ -204,7 +204,7 @@ const FacilitiesBox = ({
             </NumberContainer>
           </ResourceContainer>
           <ResourceContainer>
-            <ResourceTitle>ENERGY REQUIRED</ResourceTitle>
+            <ResourceTitle>DEUTERIUM COST</ResourceTitle>
             <NumberContainer>
               <Coins />
               {costUpdate?.deuterium}
