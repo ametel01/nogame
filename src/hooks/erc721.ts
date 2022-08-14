@@ -5,6 +5,6 @@ import abi from './abi/erc721.json'
 export function useErc721Contract() {
   return useContract({
     abi: abi as Abi,
-    address: '0x0355ef0b5d68e00be979c26b608b574b6390cac330bbd7655b8865032039803e',
+    address: '0x05294dc933146d345a198be122ccf780bd9ee6bcd5125b9d0b90a3c0c933f400',
   })
 }
