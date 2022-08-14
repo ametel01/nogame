@@ -1,7 +1,6 @@
 import { StyledTabPanel } from './styleds'
 import { useState } from 'react'
-import { FleetCost, EndTimeCompletion, Points, FleetLevels } from '~/utils/types'
-import ResourceBox from '~/components/ResourceBox'
+import { FleetCost, EndShipsCompletion, Points, FleetLevels } from '~/utils/types'
 import ShipyardBox from '../ShipyardBox'
 import { calculEnoughResources } from '~/utils'
 import BattleshipImg from '~/assets/shipyard/battleship.jpg'
@@ -11,22 +10,25 @@ import CargoImg from '~/assets/shipyard/light_cargo.jpg'
 import FighterImg from '~/assets/shipyard/light_fighter.jpg'
 import RecyclerImg from '~/assets/shipyard/recycler.jpg'
 import SatelliteImg from '~/assets/shipyard/solar_satellite.jpg'
+import { createContext } from 'vm'
 
 interface Props {
-  endTimeCompletion?: EndTimeCompletion
+  endShipsCompletion?: EndShipsCompletion
   playerResources?: Points
   fleetLevels?: FleetLevels
   FleetCost?: FleetCost
 }
 
-export const ShipyardTabPanel = ({ endTimeCompletion, playerResources, fleetLevels, FleetCost, ...rest }: Props) => {
+export const ShipyardTabPanel = ({ endShipsCompletion, playerResources, fleetLevels, FleetCost, ...rest }: Props) => {
   const [isUpgrading, setIsUpgrading] = useState(false)
-  const getEndTime = (resourceId: number) => {
-    if (endTimeCompletion?.resourceId === resourceId) {
-      if (endTimeCompletion?.timeEnd > 0 && !isUpgrading) {
+  const getEndTime = (shipId: number) => {
+    if (endShipsCompletion?.shipId === shipId) {
+      if (endShipsCompletion?.timeEnd > 0 && !isUpgrading) {
         setIsUpgrading(true)
       }
-      return endTimeCompletion.timeEnd
+      console.log('Ship id: ', shipId)
+      console.log('timeEnd: ', endShipsCompletion.timeEnd)
+      return endShipsCompletion.timeEnd
     }
     return undefined
   }
