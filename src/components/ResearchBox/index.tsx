@@ -4,12 +4,12 @@ import { Clock } from '~/components/Icons/Clock'
 import { Coins } from '~/components/Icons/Coins'
 import { ButtonPrimary } from '~/components/Button'
 import Image from 'next/image'
-
+import { numberWithCommas } from '~/utils'
 import plus from '~/assets/icons/Plus.svg'
 import Column from '../Column'
 import React, { useMemo } from 'react'
-import useBuildShipStart, { ShipType } from '~/hooks/calls/useBuildShipsStart'
-import useBuildShipComplete from '~/hooks/calls/useBuildShipsComplete'
+import useUpgradeResourceStart, { ResourceType } from '~/hooks/calls/useUpgradeResourceStart'
+import useCompleteResource from '~/hooks/calls/useUpgradeResourceComplete'
 import useCollectResources from '~/hooks/calls/useCollectResources'
 
 const Box = styled.div<{ customColor: string }>`
@@ -89,10 +89,10 @@ const ButtonContainer = styled.div`
 interface Props {
   img: any
   title: string
-  functionCallName: ShipType
+  functionCallName: ResourceType
   level?: number
   time?: number
-  costUpdate?: { metal: number; crystal: number; deuterium: number; energy: number }
+  costUpdate?: { metal: number; crystal: number; deuterium: number }
   hasEnoughResources?: boolean
   isUpgrading?: boolean
 }
@@ -107,7 +107,7 @@ interface ButtonArrayStates {
   icon: React.ReactNode
 }
 
-const ShipyardBox = ({
+const ResearchBox = ({
   img,
   title,
   level,
@@ -117,18 +117,21 @@ const ShipyardBox = ({
   time,
   isUpgrading,
 }: Props) => {
-  const upgrade = useBuildShipStart(functionCallName)
-  const complete = useBuildShipComplete(functionCallName)
+  const upgrade = useUpgradeResourceStart(functionCallName)
+  const complete = useCompleteResource(functionCallName)
+  const metal = costUpdate ? numberWithCommas(costUpdate.metal) : null
+  const crystal = costUpdate ? numberWithCommas(costUpdate.crystal) : null
+  const deuterium = costUpdate ? numberWithCommas(costUpdate.deuterium) : null
   const collectResources = useCollectResources()
 
   const buttonState = useMemo((): ButtonState => {
-    if (!hasEnoughResources) {
-      return 'noResource'
-    }
     if (time !== undefined && time > 0) {
       return 'upgrading'
     } else if (time !== undefined && time === 0) {
       return 'updated'
+    }
+    if (!hasEnoughResources) {
+      return 'noResource'
     }
 
     return 'valid'
@@ -185,7 +188,7 @@ const ShipyardBox = ({
             </NumberContainer>
           </ResourceContainer>
           <ResourceContainer>
-            <ResourceTitle>TIME COMPLETION</ResourceTitle>
+            <ResourceTitle>TIME END</ResourceTitle>
             <NumberContainer>
               <Clock />
               {time !== undefined ? `${time}m` : '-'}
@@ -195,21 +198,21 @@ const ShipyardBox = ({
             <ResourceTitle>METAL COST</ResourceTitle>
             <NumberContainer>
               <Coins />
-              {costUpdate?.metal}
+              {metal}
             </NumberContainer>
           </ResourceContainer>
           <ResourceContainer>
             <ResourceTitle>CRYSTAL COST</ResourceTitle>
             <NumberContainer>
               <Coins />
-              {costUpdate?.crystal}
+              {crystal}
             </NumberContainer>
           </ResourceContainer>
           <ResourceContainer>
             <ResourceTitle>DEUTERIUM COST</ResourceTitle>
             <NumberContainer>
               <Coins />
-              {costUpdate?.deuterium}
+              {deuterium}
             </NumberContainer>
           </ResourceContainer>
         </InfoContainer>
@@ -230,4 +233,4 @@ const ShipyardBox = ({
   )
 }
 
-export default ShipyardBox
+export default ResearchBox
