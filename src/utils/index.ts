@@ -21,3 +21,7 @@ export const calculEnoughResources = (
     available.deuterium - required.deuterium >= 0
   )
 }
+
+export const numberWithCommas = (num: number) => {
+  return num?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+}
