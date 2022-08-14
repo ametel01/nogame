@@ -5,6 +5,6 @@ import abi from './abi/main.json'
 export function useGameContract() {
   return useContract({
     abi: abi as Abi,
-    address: '0x009d8324d25911f6c31da99e1ea4ad8561ee22579d5b263b5c13efef57114586',
+    address: '0x05c1d38a6d65e0c048e2ef7f1b11d4f863c64ce66af9b944a904304a72ae54e2',
   })
 }
