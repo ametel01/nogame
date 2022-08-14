@@ -40,7 +40,7 @@ const Container = styled.div`
 `
 
 interface Props {
-  total?: number
+  total?: string
   img: any
   iconImg: any
   title: string
@@ -128,21 +128,21 @@ const ResourcesContainer = () => {
     <div>
       <Resource
         title="Metal"
-        address="0x01d113c79ac4828e4a6dd910e4b3da97f77c141900f62f7bf4a5052c08a99cfa"
+        address="0x07d236d9446bbe6fa315d1dfe4a952ee8fc0e6ad9fd44789947ab2c01fcfcd91"
         img={iron}
         iconImg={coins}
         total={resources?.metal}
       />
       <Resource
         title="Crystal"
-        address="0x047ddc05aa8247073b534e1a3bc5dde5fbfb03a42f7a59a9abf2f71f3acf0bbf"
+        address="0x062dd487cc4c3eee23fa185ec71da52c6942fc53086912880e68b1b52435c00a"
         img={crystal}
         iconImg={gem}
         total={resources?.crystal}
       />
       <Resource
         title="Deuterium"
-        address="0x02180ef049384f9746dd06de79a47d0e3ba07f28f9818def03ed1e718f5e2ac5"
+        address="0x07996b41f8ef1f5e746eb6ecb9b99adeb0a8cff2095a4d85d40ac493781c7998"
         img={deuterium}
         iconImg={atom}
         total={resources?.deuterium}
