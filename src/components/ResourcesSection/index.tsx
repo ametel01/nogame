@@ -67,6 +67,12 @@ export const ResourcesSection: FC = () => {
     args: [],
   })
 
+  const { data: shipsCompletion } = useStarknetCall({
+    contract: gameContract,
+    method: 'getShipyardQueStatus',
+    args: [account],
+  })
+
   const { data: techUpgradesCost } = useStarknetCall({
     contract: gameContract,
     method: 'getTechUpgradeCost',
@@ -76,6 +82,12 @@ export const ResourcesSection: FC = () => {
   const { data: technologiesLevels } = useStarknetCall({
     contract: gameContract,
     method: 'getTechLevels',
+    args: [account],
+  })
+
+  const { data: techCompletion } = useStarknetCall({
+    contract: gameContract,
+    method: 'getResearchQueStatus',
     args: [account],
   })
 
@@ -117,28 +129,28 @@ export const ResourcesSection: FC = () => {
     if (resourcesUpgradesCost) {
       return {
         metal: {
-          metal: numberWithCommas(dataToNumber(resourcesUpgradesCost['metal_mine'].metal)),
-          crystal: numberWithCommas(dataToNumber(resourcesUpgradesCost['metal_mine'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(resourcesUpgradesCost['metal_mine'].deuterium)),
-          energy: numberWithCommas(dataToNumber(resourcesUpgradesCost['metal_mine'].energy_cost)),
+          metal: dataToNumber(resourcesUpgradesCost['metal_mine'].metal),
+          crystal: dataToNumber(resourcesUpgradesCost['metal_mine'].crystal),
+          deuterium: dataToNumber(resourcesUpgradesCost['metal_mine'].deuterium),
+          energy: dataToNumber(resourcesUpgradesCost['metal_mine'].energy_cost),
         },
         crystal: {
-          metal: numberWithCommas(dataToNumber(resourcesUpgradesCost['crystal_mine'].metal)),
-          crystal: numberWithCommas(dataToNumber(resourcesUpgradesCost['crystal_mine'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(resourcesUpgradesCost['crystal_mine'].deuterium)),
-          energy: numberWithCommas(dataToNumber(resourcesUpgradesCost['crystal_mine'].energy_cost)),
+          metal: dataToNumber(resourcesUpgradesCost['crystal_mine'].metal),
+          crystal: dataToNumber(resourcesUpgradesCost['crystal_mine'].crystal),
+          deuterium: dataToNumber(resourcesUpgradesCost['crystal_mine'].deuterium),
+          energy: dataToNumber(resourcesUpgradesCost['crystal_mine'].energy_cost),
         },
         deuterium: {
-          metal: numberWithCommas(dataToNumber(resourcesUpgradesCost['deuterium_mine'].metal)),
-          crystal: numberWithCommas(dataToNumber(resourcesUpgradesCost['deuterium_mine'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(resourcesUpgradesCost['deuterium_mine'].deuterium)),
-          energy: numberWithCommas(dataToNumber(resourcesUpgradesCost['deuterium_mine'].energy_cost)),
+          metal: dataToNumber(resourcesUpgradesCost['deuterium_mine'].metal),
+          crystal: dataToNumber(resourcesUpgradesCost['deuterium_mine'].crystal),
+          deuterium: dataToNumber(resourcesUpgradesCost['deuterium_mine'].deuterium),
+          energy: dataToNumber(resourcesUpgradesCost['deuterium_mine'].energy_cost),
         },
         solarPlant: {
-          metal: numberWithCommas(dataToNumber(resourcesUpgradesCost['solar_plant'].metal)),
-          crystal: numberWithCommas(dataToNumber(resourcesUpgradesCost['solar_plant'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(resourcesUpgradesCost['solar_plant'].deuterium)),
-          energy: numberWithCommas(dataToNumber(resourcesUpgradesCost['solar_plant'].energy_cost)),
+          metal: dataToNumber(resourcesUpgradesCost['solar_plant'].metal),
+          crystal: dataToNumber(resourcesUpgradesCost['solar_plant'].crystal),
+          deuterium: dataToNumber(resourcesUpgradesCost['solar_plant'].deuterium),
+          energy: dataToNumber(resourcesUpgradesCost['solar_plant'].energy_cost),
         },
       }
     }
@@ -159,28 +171,42 @@ export const ResourcesSection: FC = () => {
     if (facilitiesUpgradesCost) {
       return {
         robots: {
-          metal: numberWithCommas(dataToNumber(facilitiesUpgradesCost['robot_factory'].metal)),
-          crystal: numberWithCommas(dataToNumber(facilitiesUpgradesCost['robot_factory'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(facilitiesUpgradesCost['robot_factory'].deuterium)),
+          metal: dataToNumber(facilitiesUpgradesCost['robot_factory'].metal),
+          crystal: dataToNumber(facilitiesUpgradesCost['robot_factory'].crystal),
+          deuterium: dataToNumber(facilitiesUpgradesCost['robot_factory'].deuterium),
         },
         shipyard: {
-          metal: numberWithCommas(dataToNumber(facilitiesUpgradesCost['shipyard'].metal)),
-          crystal: numberWithCommas(dataToNumber(facilitiesUpgradesCost['shipyard'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(facilitiesUpgradesCost['shipyard'].deuterium)),
+          metal: dataToNumber(facilitiesUpgradesCost['shipyard'].metal),
+          crystal: dataToNumber(facilitiesUpgradesCost['shipyard'].crystal),
+          deuterium: dataToNumber(facilitiesUpgradesCost['shipyard'].deuterium),
         },
         lab: {
-          metal: numberWithCommas(dataToNumber(facilitiesUpgradesCost['research_lab'].metal)),
-          crystal: numberWithCommas(dataToNumber(facilitiesUpgradesCost['research_lab'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(facilitiesUpgradesCost['research_lab'].deuterium)),
+          metal: dataToNumber(facilitiesUpgradesCost['research_lab'].metal),
+          crystal: dataToNumber(facilitiesUpgradesCost['research_lab'].crystal),
+          deuterium: dataToNumber(facilitiesUpgradesCost['research_lab'].deuterium),
         },
         nanite: {
-          metal: numberWithCommas(dataToNumber(facilitiesUpgradesCost['nanite_factory'].metal)),
-          crystal: numberWithCommas(dataToNumber(facilitiesUpgradesCost['nanite_factory'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(facilitiesUpgradesCost['nanite_factory'].deuterium)),
+          metal: dataToNumber(facilitiesUpgradesCost['nanite_factory'].metal),
+          crystal: dataToNumber(facilitiesUpgradesCost['nanite_factory'].crystal),
+          deuterium: dataToNumber(facilitiesUpgradesCost['nanite_factory'].deuterium),
         },
       }
     }
   }, [facilitiesUpgradesCost])
+
+  const endShipsCompletion = useMemo(() => {
+    if (shipsCompletion) {
+      const end = fromUnixTime(dataToNumber(shipsCompletion['status'].lock_end))
+      const timeDifferenceInMinutes = differenceInMinutes(end, new Date())
+      console.log('endShipsCompletion: ', timeDifferenceInMinutes)
+      console.log('new date: ', new Date())
+      return {
+        shipId: dataToNumber(shipsCompletion['status'].ship_id),
+        units: dataToNumber(shipsCompletion['status'].units),
+        timeEnd: timeDifferenceInMinutes > 0 ? timeDifferenceInMinutes : 0,
+      }
+    }
+  }, [shipsCompletion])
 
   const fleetLevels = useMemo(() => {
     if (shipsLevels) {
@@ -200,39 +226,39 @@ export const ResourcesSection: FC = () => {
     if (shipsCost) {
       return {
         cargo: {
-          metal: numberWithCommas(dataToNumber(shipsCost['cargo'].metal)),
-          crystal: numberWithCommas(dataToNumber(shipsCost['cargo'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(shipsCost['cargo'].deuterium)),
+          metal: dataToNumber(shipsCost['cargo'].metal),
+          crystal: dataToNumber(shipsCost['cargo'].crystal),
+          deuterium: dataToNumber(shipsCost['cargo'].deuterium),
         },
         recycler: {
-          metal: numberWithCommas(dataToNumber(shipsCost['recycler'].metal)),
-          crystal: numberWithCommas(dataToNumber(shipsCost['recycler'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(shipsCost['recycler'].deuterium)),
+          metal: dataToNumber(shipsCost['recycler'].metal),
+          crystal: dataToNumber(shipsCost['recycler'].crystal),
+          deuterium: dataToNumber(shipsCost['recycler'].deuterium),
         },
         probe: {
-          metal: numberWithCommas(dataToNumber(shipsCost['espionage_probe'].metal)),
-          crystal: numberWithCommas(dataToNumber(shipsCost['espionage_probe'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(shipsCost['espionage_probe'].deuterium)),
+          metal: dataToNumber(shipsCost['espionage_probe'].metal),
+          crystal: dataToNumber(shipsCost['espionage_probe'].crystal),
+          deuterium: dataToNumber(shipsCost['espionage_probe'].deuterium),
         },
         satellite: {
-          metal: numberWithCommas(dataToNumber(shipsCost['solar_satellite'].metal)),
-          crystal: numberWithCommas(dataToNumber(shipsCost['solar_satellite'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(shipsCost['solar_satellite'].deuterium)),
+          metal: dataToNumber(shipsCost['solar_satellite'].metal),
+          crystal: dataToNumber(shipsCost['solar_satellite'].crystal),
+          deuterium: dataToNumber(shipsCost['solar_satellite'].deuterium),
         },
         fighter: {
-          metal: numberWithCommas(dataToNumber(shipsCost['light_fighter'].metal)),
-          crystal: numberWithCommas(dataToNumber(shipsCost['light_fighter'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(shipsCost['light_fighter'].deuterium)),
+          metal: dataToNumber(shipsCost['light_fighter'].metal),
+          crystal: dataToNumber(shipsCost['light_fighter'].crystal),
+          deuterium: dataToNumber(shipsCost['light_fighter'].deuterium),
         },
         cruiser: {
-          metal: numberWithCommas(dataToNumber(shipsCost['cruiser'].metal)),
-          crystal: numberWithCommas(dataToNumber(shipsCost['cruiser'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(shipsCost['cruiser'].deuterium)),
+          metal: dataToNumber(shipsCost['cruiser'].metal),
+          crystal: dataToNumber(shipsCost['cruiser'].crystal),
+          deuterium: dataToNumber(shipsCost['cruiser'].deuterium),
         },
         battleship: {
-          metal: numberWithCommas(dataToNumber(shipsCost['battleship'].metal)),
-          crystal: numberWithCommas(dataToNumber(shipsCost['battleship'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(shipsCost['battleship'].deuterium)),
+          metal: dataToNumber(shipsCost['battleship'].metal),
+          crystal: dataToNumber(shipsCost['battleship'].crystal),
+          deuterium: dataToNumber(shipsCost['battleship'].deuterium),
         },
       }
     }
@@ -263,78 +289,90 @@ export const ResourcesSection: FC = () => {
     if (techUpgradesCost) {
       return {
         armour: {
-          metal: numberWithCommas(dataToNumber(techUpgradesCost['armour_tech'].metal)),
-          crystal: numberWithCommas(dataToNumber(techUpgradesCost['armour_tech'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(techUpgradesCost['armour_tech'].deuterium)),
+          metal: dataToNumber(techUpgradesCost['armour_tech'].metal),
+          crystal: dataToNumber(techUpgradesCost['armour_tech'].crystal),
+          deuterium: dataToNumber(techUpgradesCost['armour_tech'].deuterium),
         },
         astrophysics: {
-          metal: numberWithCommas(dataToNumber(techUpgradesCost['astrophysics'].metal)),
-          crystal: numberWithCommas(dataToNumber(techUpgradesCost['astrophysics'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(techUpgradesCost['astrophysics'].deuterium)),
+          metal: dataToNumber(techUpgradesCost['astrophysics'].metal),
+          crystal: dataToNumber(techUpgradesCost['astrophysics'].crystal),
+          deuterium: dataToNumber(techUpgradesCost['astrophysics'].deuterium),
         },
         combustion: {
-          metal: numberWithCommas(dataToNumber(techUpgradesCost['combustion_drive'].metal)),
-          crystal: numberWithCommas(dataToNumber(techUpgradesCost['combustion_drive'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(techUpgradesCost['combustion_drive'].deuterium)),
+          metal: dataToNumber(techUpgradesCost['combustion_drive'].metal),
+          crystal: dataToNumber(techUpgradesCost['combustion_drive'].crystal),
+          deuterium: dataToNumber(techUpgradesCost['combustion_drive'].deuterium),
         },
         computer: {
-          metal: numberWithCommas(dataToNumber(techUpgradesCost['computer_tech'].metal)),
-          crystal: numberWithCommas(dataToNumber(techUpgradesCost['computer_tech'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(techUpgradesCost['computer_tech'].deuterium)),
+          metal: dataToNumber(techUpgradesCost['computer_tech'].metal),
+          crystal: dataToNumber(techUpgradesCost['computer_tech'].crystal),
+          deuterium: dataToNumber(techUpgradesCost['computer_tech'].deuterium),
         },
         energy: {
-          metal: numberWithCommas(dataToNumber(techUpgradesCost['energy_tech'].metal)),
-          crystal: numberWithCommas(dataToNumber(techUpgradesCost['energy_tech'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(techUpgradesCost['energy_tech'].deuterium)),
+          metal: dataToNumber(techUpgradesCost['energy_tech'].metal),
+          crystal: dataToNumber(techUpgradesCost['energy_tech'].crystal),
+          deuterium: dataToNumber(techUpgradesCost['energy_tech'].deuterium),
         },
         espionage: {
-          metal: numberWithCommas(dataToNumber(techUpgradesCost['espionage_tech'].metal)),
-          crystal: numberWithCommas(dataToNumber(techUpgradesCost['espionage_tech'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(techUpgradesCost['espionage_tech'].deuterium)),
+          metal: dataToNumber(techUpgradesCost['espionage_tech'].metal),
+          crystal: dataToNumber(techUpgradesCost['espionage_tech'].crystal),
+          deuterium: dataToNumber(techUpgradesCost['espionage_tech'].deuterium),
         },
         hyperspaceDrive: {
-          metal: numberWithCommas(dataToNumber(techUpgradesCost['hyperspace_drive'].metal)),
-          crystal: numberWithCommas(dataToNumber(techUpgradesCost['hyperspace_drive'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(techUpgradesCost['hyperspace_drive'].deuterium)),
+          metal: dataToNumber(techUpgradesCost['hyperspace_drive'].metal),
+          crystal: dataToNumber(techUpgradesCost['hyperspace_drive'].crystal),
+          deuterium: dataToNumber(techUpgradesCost['hyperspace_drive'].deuterium),
         },
         hyperspaceTech: {
-          metal: numberWithCommas(dataToNumber(techUpgradesCost['hyperspace_tech'].metal)),
-          crystal: numberWithCommas(dataToNumber(techUpgradesCost['hyperspace_tech'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(techUpgradesCost['hyperspace_tech'].deuterium)),
+          metal: dataToNumber(techUpgradesCost['hyperspace_tech'].metal),
+          crystal: dataToNumber(techUpgradesCost['hyperspace_tech'].crystal),
+          deuterium: dataToNumber(techUpgradesCost['hyperspace_tech'].deuterium),
         },
         impulse: {
-          metal: numberWithCommas(dataToNumber(techUpgradesCost['impulse_drive'].metal)),
-          crystal: numberWithCommas(dataToNumber(techUpgradesCost['impulse_drive'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(techUpgradesCost['impulse_drive'].deuterium)),
+          metal: dataToNumber(techUpgradesCost['impulse_drive'].metal),
+          crystal: dataToNumber(techUpgradesCost['impulse_drive'].crystal),
+          deuterium: dataToNumber(techUpgradesCost['impulse_drive'].deuterium),
         },
         ion: {
-          metal: numberWithCommas(dataToNumber(techUpgradesCost['ion_tech'].metal)),
-          crystal: numberWithCommas(dataToNumber(techUpgradesCost['ion_tech'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(techUpgradesCost['ion_tech'].deuterium)),
+          metal: dataToNumber(techUpgradesCost['ion_tech'].metal),
+          crystal: dataToNumber(techUpgradesCost['ion_tech'].crystal),
+          deuterium: dataToNumber(techUpgradesCost['ion_tech'].deuterium),
         },
         laser: {
-          metal: numberWithCommas(dataToNumber(techUpgradesCost['laser_tech'].metal)),
-          crystal: numberWithCommas(dataToNumber(techUpgradesCost['laser_tech'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(techUpgradesCost['laser_tech'].deuterium)),
+          metal: dataToNumber(techUpgradesCost['laser_tech'].metal),
+          crystal: dataToNumber(techUpgradesCost['laser_tech'].crystal),
+          deuterium: dataToNumber(techUpgradesCost['laser_tech'].deuterium),
         },
         plasma: {
-          metal: numberWithCommas(dataToNumber(techUpgradesCost['plasma_tech'].metal)),
-          crystal: numberWithCommas(dataToNumber(techUpgradesCost['plasma_tech'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(techUpgradesCost['plasma_tech'].deuterium)),
+          metal: dataToNumber(techUpgradesCost['plasma_tech'].metal),
+          crystal: dataToNumber(techUpgradesCost['plasma_tech'].crystal),
+          deuterium: dataToNumber(techUpgradesCost['plasma_tech'].deuterium),
         },
         shielding: {
-          metal: numberWithCommas(dataToNumber(techUpgradesCost['shielding_tech'].metal)),
-          crystal: numberWithCommas(dataToNumber(techUpgradesCost['shielding_tech'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(techUpgradesCost['shielding_tech'].deuterium)),
+          metal: dataToNumber(techUpgradesCost['shielding_tech'].metal),
+          crystal: dataToNumber(techUpgradesCost['shielding_tech'].crystal),
+          deuterium: dataToNumber(techUpgradesCost['shielding_tech'].deuterium),
         },
         weapons: {
-          metal: numberWithCommas(dataToNumber(techUpgradesCost['weapons_tech'].metal)),
-          crystal: numberWithCommas(dataToNumber(techUpgradesCost['weapons_tech'].crystal)),
-          deuterium: numberWithCommas(dataToNumber(techUpgradesCost['weapons_tech'].deuterium)),
+          metal: dataToNumber(techUpgradesCost['weapons_tech'].metal),
+          crystal: dataToNumber(techUpgradesCost['weapons_tech'].crystal),
+          deuterium: dataToNumber(techUpgradesCost['weapons_tech'].deuterium),
         },
       }
     }
   }, [techUpgradesCost])
+
+  const endTechCompletion = useMemo(() => {
+    if (techCompletion) {
+      const end = fromUnixTime(dataToNumber(techCompletion['status'].lock_end))
+      const timeDifferenceInMinutes = differenceInMinutes(end, new Date())
+
+      return {
+        techId: dataToNumber(techCompletion['status'].tech_id),
+        timeEnd: timeDifferenceInMinutes > 0 ? timeDifferenceInMinutes : 0,
+      }
+    }
+  }, [techCompletion])
 
   return (
     <ResourcesTabs>
@@ -380,13 +418,13 @@ export const ResourcesSection: FC = () => {
         FacilitiesCostUpgrade={facilitiesCostUpgrade}
       />
       <ShipyardTabPanel
-        endTimeCompletion={endTimeCompletion}
+        endShipsCompletion={endShipsCompletion}
         playerResources={playerResources}
         fleetLevels={fleetLevels}
         FleetCost={fleetCost}
       />
       <ResearchTabPanel
-        endTimeCompletion={endTimeCompletion}
+        endTechCompletion={endTechCompletion}
         playerResources={playerResources}
         techLevels={techLevels}
         TechCostUpgrade={techCostUpgrade}
