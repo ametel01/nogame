@@ -9,6 +9,7 @@ import useUpgradeResourceComplete from '~/hooks/calls/useUpgradeResourceComplete
 import plus from '~/assets/icons/Plus.svg'
 import Column from '../Column'
 import React, { useMemo } from 'react'
+import { numberWithCommas } from '~/utils'
 
 const Box = styled.div<{ customColor: string }>`
   width: 100%;
@@ -117,18 +118,20 @@ const ResourceBox = ({
 }: Props) => {
   const upgrade = useUpgradeResourceStart(functionCallName)
   const complete = useUpgradeResourceComplete(functionCallName)
+  const metal = costUpdate ? numberWithCommas(costUpdate.metal) : null
+  const crystal = costUpdate ? numberWithCommas(costUpdate.crystal) : null
+  const energy = costUpdate ? numberWithCommas(costUpdate.energy) : null
   //const collectResources = useCollectResources()
 
   const buttonState = useMemo((): ButtonState => {
-    if (!hasEnoughResources) {
-      return 'noResource'
-    }
     if (time !== undefined && time > 0) {
       return 'upgrading'
     } else if (time !== undefined && time === 0) {
       return 'updated'
     }
-
+    if (!hasEnoughResources) {
+      return 'noResource'
+    }
     return 'valid'
   }, [hasEnoughResources, time])
 
@@ -183,7 +186,7 @@ const ResourceBox = ({
             </NumberContainer>
           </ResourceContainer>
           <ResourceContainer>
-            <ResourceTitle>TIME COMPLETION</ResourceTitle>
+            <ResourceTitle>TIME END</ResourceTitle>
             <NumberContainer>
               <Clock />
               {time !== undefined ? `${time}m` : '-'}
@@ -193,21 +196,21 @@ const ResourceBox = ({
             <ResourceTitle>METAL COST</ResourceTitle>
             <NumberContainer>
               <Coins />
-              {costUpdate?.metal}
+              {metal}
             </NumberContainer>
           </ResourceContainer>
           <ResourceContainer>
             <ResourceTitle>CRYSTAL COST</ResourceTitle>
             <NumberContainer>
               <Coins />
-              {costUpdate?.crystal}
+              {crystal}
             </NumberContainer>
           </ResourceContainer>
           <ResourceContainer>
             <ResourceTitle>ENERGY REQUIRED</ResourceTitle>
             <NumberContainer>
               <Coins />
-              {costUpdate?.energy}
+              {energy}
             </NumberContainer>
           </ResourceContainer>
         </InfoContainer>
