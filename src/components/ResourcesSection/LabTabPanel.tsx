@@ -1,7 +1,7 @@
 import { StyledTabPanel } from './styleds'
 import { useState } from 'react'
-import { TechCostUpgrade, EndTimeCompletion, Points, TechLevels } from '~/utils/types'
-import FacilitiesBox from '../FacilitiesBox'
+import { TechCostUpgrade, EndTechCompletion, Points, TechLevels } from '~/utils/types'
+import ResearchBox from '../ResearchBox'
 import { calculEnoughResources } from '~/utils'
 import ArmourImg from '~/assets/research_lab/armour_tech.jpg'
 import AstrophysicsImg from '~/assets/research_lab/astrophysics.jpg'
@@ -19,32 +19,34 @@ import ShieldingImg from '~/assets/research_lab/shielding_tech.jpg'
 import WeaponsImg from '~/assets/research_lab/weapons_tech.jpg'
 
 interface Props {
-  endTimeCompletion?: EndTimeCompletion
+  endTechCompletion?: EndTechCompletion
   playerResources?: Points
   techLevels?: TechLevels
   TechCostUpgrade?: TechCostUpgrade
 }
 
 export const ResearchTabPanel = ({
-  endTimeCompletion,
+  endTechCompletion,
   playerResources,
   techLevels,
   TechCostUpgrade,
   ...rest
 }: Props) => {
   const [isUpgrading, setIsUpgrading] = useState(false)
-  const getEndTime = (resourceId: number) => {
-    if (endTimeCompletion?.resourceId === resourceId) {
-      if (endTimeCompletion?.timeEnd > 0 && !isUpgrading) {
+  const getEndTime = (techId: number) => {
+    if (endTechCompletion?.techId === techId) {
+      if (endTechCompletion?.timeEnd > 0 && !isUpgrading) {
         setIsUpgrading(true)
       }
-      return endTimeCompletion.timeEnd
+      console.log('techID: ', techId)
+      console.log('timeEnd: ', endTechCompletion.timeEnd)
+      return endTechCompletion.timeEnd
     }
     return undefined
   }
   return (
     <StyledTabPanel {...rest}>
-      <FacilitiesBox
+      <ResearchBox
         img={ArmourImg}
         title="Armour Tech"
         functionCallName="armourTech"
@@ -56,7 +58,7 @@ export const ResearchTabPanel = ({
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.armour, playerResources)
         }
       />
-      <FacilitiesBox
+      <ResearchBox
         img={AstrophysicsImg}
         title="Astrophysics"
         functionCallName="astrophysics"
@@ -68,7 +70,7 @@ export const ResearchTabPanel = ({
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.astrophysics, playerResources)
         }
       />
-      <FacilitiesBox
+      <ResearchBox
         img={CombustionImg}
         title="Combustion Drive"
         functionCallName="combustionDrive"
@@ -80,7 +82,7 @@ export const ResearchTabPanel = ({
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.combustion, playerResources)
         }
       />
-      <FacilitiesBox
+      <ResearchBox
         img={ComputerImg}
         title="Computer Tech"
         functionCallName="computerTech"
@@ -92,7 +94,7 @@ export const ResearchTabPanel = ({
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.computer, playerResources)
         }
       />
-      <FacilitiesBox
+      <ResearchBox
         img={EnergyImg}
         title="Energy Tech"
         functionCallName="energyTech"
@@ -104,7 +106,7 @@ export const ResearchTabPanel = ({
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.energy, playerResources)
         }
       />
-      <FacilitiesBox
+      <ResearchBox
         img={EspionageImg}
         title="Espionage Tech"
         functionCallName="espionageTech"
@@ -116,7 +118,7 @@ export const ResearchTabPanel = ({
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.espionage, playerResources)
         }
       />
-      <FacilitiesBox
+      <ResearchBox
         img={HyperspaceDriveImg}
         title="Hyperspace Drive"
         functionCallName="hyperspaceDrive"
@@ -128,7 +130,7 @@ export const ResearchTabPanel = ({
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.hyperspaceDrive, playerResources)
         }
       />
-      <FacilitiesBox
+      <ResearchBox
         img={HyperspaceTechImg}
         title="Hyperspace Tech"
         functionCallName="hyperspaceTech"
@@ -140,7 +142,7 @@ export const ResearchTabPanel = ({
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.hyperspaceTech, playerResources)
         }
       />
-      <FacilitiesBox
+      <ResearchBox
         img={ImpulseImg}
         title="Impulse Drive"
         functionCallName="impulseDrive"
@@ -152,7 +154,7 @@ export const ResearchTabPanel = ({
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.impulse, playerResources)
         }
       />
-      <FacilitiesBox
+      <ResearchBox
         img={IonImg}
         title="Ion Tech"
         functionCallName="ionTech"
@@ -164,7 +166,7 @@ export const ResearchTabPanel = ({
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.ion, playerResources)
         }
       />
-      <FacilitiesBox
+      <ResearchBox
         img={LaserImg}
         title="Laser Tech"
         functionCallName="laserTech"
@@ -176,7 +178,7 @@ export const ResearchTabPanel = ({
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.laser, playerResources)
         }
       />
-      <FacilitiesBox
+      <ResearchBox
         img={PlasmaImg}
         title="Plasma Tech"
         functionCallName="plasmaTech"
@@ -188,7 +190,7 @@ export const ResearchTabPanel = ({
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.plasma, playerResources)
         }
       />
-      <FacilitiesBox
+      <ResearchBox
         img={ShieldingImg}
         title="Shielding Tech"
         functionCallName="shieldingTech"
@@ -200,7 +202,7 @@ export const ResearchTabPanel = ({
           playerResources && TechCostUpgrade && calculEnoughResources(TechCostUpgrade.shielding, playerResources)
         }
       />
-      <FacilitiesBox
+      <ResearchBox
         img={WeaponsImg}
         title="Weapons Tech"
         functionCallName="weaponsTech"
