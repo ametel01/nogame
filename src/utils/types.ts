@@ -1,8 +1,8 @@
 export interface ResourcesCostUpgrade {
-  metal: { metal: number; crystal: number; deuterium: number; energy: number }
-  crystal: { metal: number; crystal: number; deuterium: number; energy: number }
-  deuterium: { metal: number; crystal: number; deuterium: number; energy: number }
-  solarPlant: { metal: number; crystal: number; deuterium: number; energy: number }
+  metal: { metal: any; crystal: any; deuterium: any; energy: any }
+  crystal: { metal: any; crystal: any; deuterium: any; energy: any }
+  deuterium: { metal: any; crystal: any; deuterium: any; energy: any }
+  solarPlant: { metal: any; crystal: any; deuterium: any; energy: any }
 }
 
 export interface ResourceLevels {
@@ -13,10 +13,10 @@ export interface ResourceLevels {
 }
 
 export interface FacilitiesCostUpgrade {
-  robots: { metal: number; crystal: number; deuterium: number; energy: number }
-  shipyard: { metal: number; crystal: number; deuterium: number; energy: number }
-  lab: { metal: number; crystal: number; deuterium: number; energy: number }
-  nanite: { metal: number; crystal: number; deuterium: number; energy: number }
+  robots: { metal: any; crystal: any; deuterium: any }
+  shipyard: { metal: any; crystal: any; deuterium: any }
+  lab: { metal: any; crystal: any; deuterium: any }
+  nanite: { metal: any; crystal: any; deuterium: any }
 }
 
 export interface FacilitiesLevels {
@@ -37,30 +37,30 @@ export interface FleetLevels {
 }
 
 export interface FleetCost {
-  cargo: { metal: number; crystal: number; deuterium: number; energy: number }
-  recycler: { metal: number; crystal: number; deuterium: number; energy: number }
-  probe: { metal: number; crystal: number; deuterium: number; energy: number }
-  satellite: { metal: number; crystal: number; deuterium: number; energy: number }
-  fighter: { metal: number; crystal: number; deuterium: number; energy: number }
-  cruiser: { metal: number; crystal: number; deuterium: number; energy: number }
-  battleship: { metal: number; crystal: number; deuterium: number; energy: number }
+  cargo: { metal: any; crystal: any; deuterium: any }
+  recycler: { metal: any; crystal: any; deuterium: any }
+  probe: { metal: any; crystal: any; deuterium: any }
+  satellite: { metal: any; crystal: any; deuterium: any }
+  fighter: { metal: any; crystal: any; deuterium: any }
+  cruiser: { metal: any; crystal: any; deuterium: any }
+  battleship: { metal: any; crystal: any; deuterium: any }
 }
 
 export interface TechCostUpgrade {
-  armour: { metal: number; crystal: number; deuterium: number; energy: number }
-  astrophysics: { metal: number; crystal: number; deuterium: number; energy: number }
-  combustion: { metal: number; crystal: number; deuterium: number; energy: number }
-  computer: { metal: number; crystal: number; deuterium: number; energy: number }
-  energy: { metal: number; crystal: number; deuterium: number; energy: number }
-  espionage: { metal: number; crystal: number; deuterium: number; energy: number }
-  hyperspaceDrive: { metal: number; crystal: number; deuterium: number; energy: number }
-  hyperspaceTech: { metal: number; crystal: number; deuterium: number; energy: number }
-  impulse: { metal: number; crystal: number; deuterium: number; energy: number }
-  ion: { metal: number; crystal: number; deuterium: number; energy: number }
-  laser: { metal: number; crystal: number; deuterium: number; energy: number }
-  plasma: { metal: number; crystal: number; deuterium: number; energy: number }
-  shielding: { metal: number; crystal: number; deuterium: number; energy: number }
-  weapons: { metal: number; crystal: number; deuterium: number; energy: number }
+  armour: { metal: any; crystal: any; deuterium: any }
+  astrophysics: { metal: any; crystal: any; deuterium: any }
+  combustion: { metal: any; crystal: any; deuterium: any }
+  computer: { metal: any; crystal: any; deuterium: any }
+  energy: { metal: any; crystal: any; deuterium: any }
+  espionage: { metal: any; crystal: any; deuterium: any }
+  hyperspaceDrive: { metal: any; crystal: any; deuterium: any }
+  hyperspaceTech: { metal: any; crystal: any; deuterium: any }
+  impulse: { metal: any; crystal: any; deuterium: any }
+  ion: { metal: any; crystal: any; deuterium: any }
+  laser: { metal: any; crystal: any; deuterium: any }
+  plasma: { metal: any; crystal: any; deuterium: any }
+  shielding: { metal: any; crystal: any; deuterium: any }
+  weapons: { metal: any; crystal: any; deuterium: any }
 }
 
 export interface TechLevels {
@@ -89,5 +89,16 @@ export interface Points {
 
 export interface EndTimeCompletion {
   resourceId: number
+  timeEnd: number
+}
+
+export interface EndShipsCompletion {
+  shipId: number
+  units: number
+  timeEnd: number
+}
+
+export interface EndTechCompletion {
+  techId: number
   timeEnd: number
 }
