@@ -9,6 +9,7 @@ import useUpgradeResourceComplete from '~/hooks/calls/useUpgradeResourceComplete
 import plus from '~/assets/icons/Plus.svg'
 import Column from '../Column'
 import React, { useMemo } from 'react'
+import { numberWithCommas } from '~/utils'
 
 const Box = styled.div<{ customColor: string }>`
   width: 100%;
@@ -90,7 +91,7 @@ interface Props {
   functionCallName: ResourceType
   level?: number
   time?: number
-  costUpdate?: { metal: number; crystal: number; deuterium: number; energy: number }
+  costUpdate?: { metal: number; crystal: number; deuterium: number }
   hasEnoughResources?: boolean
   isUpgrading?: boolean
 }
@@ -118,7 +119,9 @@ const FacilitiesBox = ({
   const upgrade = useUpgradeResourceStart(functionCallName)
   const complete = useUpgradeResourceComplete(functionCallName)
   //const collectResources = useCollectResources()
-
+  const metal = costUpdate ? numberWithCommas(costUpdate.metal) : null
+  const crystal = costUpdate ? numberWithCommas(costUpdate.crystal) : null
+  const deuterium = costUpdate ? numberWithCommas(costUpdate.deuterium) : null
   const buttonState = useMemo((): ButtonState => {
     if (!hasEnoughResources) {
       return 'noResource'
@@ -183,7 +186,7 @@ const FacilitiesBox = ({
             </NumberContainer>
           </ResourceContainer>
           <ResourceContainer>
-            <ResourceTitle>TIME COMPLETION</ResourceTitle>
+            <ResourceTitle>TIME END</ResourceTitle>
             <NumberContainer>
               <Clock />
               {time !== undefined ? `${time}m` : '-'}
@@ -193,21 +196,21 @@ const FacilitiesBox = ({
             <ResourceTitle>METAL COST</ResourceTitle>
             <NumberContainer>
               <Coins />
-              {costUpdate?.metal}
+              {metal}
             </NumberContainer>
           </ResourceContainer>
           <ResourceContainer>
             <ResourceTitle>CRYSTAL COST</ResourceTitle>
             <NumberContainer>
               <Coins />
-              {costUpdate?.crystal}
+              {crystal}
             </NumberContainer>
           </ResourceContainer>
           <ResourceContainer>
             <ResourceTitle>DEUTERIUM COST</ResourceTitle>
             <NumberContainer>
               <Coins />
-              {costUpdate?.deuterium}
+              {deuterium}
             </NumberContainer>
           </ResourceContainer>
         </InfoContainer>
