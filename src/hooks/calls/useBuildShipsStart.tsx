@@ -1,6 +1,6 @@
 import { useStarknet } from '@starknet-react/core'
 import { useCallback } from 'react'
-import { AddTransactionResponse } from 'starknet'
+import { AddTransactionResponse, constants } from 'starknet'
 import { useS2MTransactionManager } from '~/providers/transaction'
 import { useGameContract } from '../game'
 
@@ -13,12 +13,11 @@ export type ShipType =
   | 'cruiser'
   | 'battleShip'
 
-export default function useBuildShipStart(shipName: ShipType) {
+export default function useBuildShipStart(shipName: ShipType, quantity: number) {
   const { account } = useStarknet()
   const { contract } = useGameContract()
 
   const { addTransaction } = useS2MTransactionManager()
-
   return useCallback(async () => {
     if (!contract || !account) {
       throw new Error('Missing Dependencies')
@@ -27,7 +26,7 @@ export default function useBuildShipStart(shipName: ShipType) {
     return (
       contract
         // TODO: implement form box to get user amuont of ships to build
-        .invoke(`${shipName}BuildStart`, [1])
+        .invoke(`${shipName}BuildStart`, [quantity])
         .then((tx: AddTransactionResponse) => {
           console.log('Transaction hash: ', tx.transaction_hash)
 
@@ -35,7 +34,7 @@ export default function useBuildShipStart(shipName: ShipType) {
             status: tx.code,
             transactionHash: tx.transaction_hash,
             address: account,
-            summary: `Upgrade ${shipName}`,
+            summary: `Build ${shipName}`,
           })
 
           return tx.transaction_hash
@@ -44,5 +43,5 @@ export default function useBuildShipStart(shipName: ShipType) {
           console.error(e)
         })
     )
-  }, [account, addTransaction, contract])
+  }, [account, addTransaction, contract, quantity])
 }
