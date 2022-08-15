@@ -38,8 +38,7 @@ export const ResearchTabPanel = ({
       if (endTechCompletion?.timeEnd > 0 && !isUpgrading) {
         setIsUpgrading(true)
       }
-      console.log('techID: ', techId)
-      console.log('timeEnd: ', endTechCompletion.timeEnd)
+
       return endTechCompletion.timeEnd
     }
     return undefined

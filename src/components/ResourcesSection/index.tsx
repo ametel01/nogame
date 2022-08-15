@@ -198,8 +198,6 @@ export const ResourcesSection: FC = () => {
     if (shipsCompletion) {
       const end = fromUnixTime(dataToNumber(shipsCompletion['status'].lock_end))
       const timeDifferenceInMinutes = differenceInMinutes(end, new Date())
-      console.log('endShipsCompletion: ', timeDifferenceInMinutes)
-      console.log('new date: ', new Date())
       return {
         shipId: dataToNumber(shipsCompletion['status'].ship_id),
         units: dataToNumber(shipsCompletion['status'].units),
