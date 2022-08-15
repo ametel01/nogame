@@ -26,8 +26,6 @@ export const ShipyardTabPanel = ({ endShipsCompletion, playerResources, fleetLev
       if (endShipsCompletion?.timeEnd > 0 && !isUpgrading) {
         setIsUpgrading(true)
       }
-      console.log('Ship id: ', shipId)
-      console.log('timeEnd: ', endShipsCompletion.timeEnd)
       return endShipsCompletion.timeEnd
     }
     return undefined
@@ -78,7 +76,7 @@ export const ShipyardTabPanel = ({ endShipsCompletion, playerResources, fleetLev
       <ShipyardBox
         img={RecyclerImg}
         title="Recycler"
-        functionCallName="recycler"
+        functionCallName="recyclerShip"
         level={fleetLevels?.recycler}
         time={getEndTime(32)}
         costUpdate={FleetCost?.recycler}
