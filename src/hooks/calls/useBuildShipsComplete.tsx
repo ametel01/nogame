@@ -6,7 +6,7 @@ import { useGameContract } from '../game'
 
 export type ShipType =
   | 'cargoShip'
-  | 'recycler'
+  | 'recyclerShip'
   | 'espionageProbe'
   | 'solarSatellite'
   | 'lightFighter'
