@@ -122,6 +122,7 @@ const FacilitiesBox = ({
   const metal = costUpdate ? numberWithCommas(costUpdate.metal) : null
   const crystal = costUpdate ? numberWithCommas(costUpdate.crystal) : null
   const deuterium = costUpdate ? numberWithCommas(costUpdate.deuterium) : null
+
   const buttonState = useMemo((): ButtonState => {
     if (!hasEnoughResources) {
       return 'noResource'

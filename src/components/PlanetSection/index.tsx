@@ -106,13 +106,23 @@ const PlanetImage = ({ planetId }: { planetId: any }) => {
     }
   }, [metadata])
 
+  const imgId = useMemo(() => {
+    if (planetId != undefined) {
+      if (dataToNumber(planetId['low']) % 15 == 0) {
+        return 15
+      } else {
+        return dataToNumber(planetId['low']) % 15
+      }
+    }
+    return null
+  }, [planetId])
+
   const findAttribute = (name: string) =>
     metadata?.attributes.find(({ trait_type }) => trait_type === name)?.value || '-'
-
   return (
     <>
       <PlanetImageWrapper>
-        {metadata?.image ? <Image src={`/planets/${imgNumber}.png`} width={150} height={152} /> : <ImageIcon />}{' '}
+        {imgId ? <Image src={`/planets/background/${imgId}.png`} width={150} height={152} /> : <ImageIcon />}{' '}
       </PlanetImageWrapper>
 
       <PlanetInfoContainer>
