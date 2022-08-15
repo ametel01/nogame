@@ -121,17 +121,17 @@ const ResourceBox = ({
   const metal = costUpdate ? numberWithCommas(costUpdate.metal) : null
   const crystal = costUpdate ? numberWithCommas(costUpdate.crystal) : null
   const energy = costUpdate ? numberWithCommas(costUpdate.energy) : null
-  //const collectResources = useCollectResources()
 
   const buttonState = useMemo((): ButtonState => {
+    if (!hasEnoughResources) {
+      return 'noResource'
+    }
     if (time !== undefined && time > 0) {
       return 'upgrading'
     } else if (time !== undefined && time === 0) {
       return 'updated'
     }
-    if (!hasEnoughResources) {
-      return 'noResource'
-    }
+
     return 'valid'
   }, [hasEnoughResources, time])
 
