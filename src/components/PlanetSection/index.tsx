@@ -10,7 +10,7 @@ import { ScaleIcon } from '~/components/Icons/Scale'
 import { TemperatureIcon } from '~/components/Icons/Temperature'
 import { useStarknet, useStarknetCall } from '@starknet-react/core'
 import { useGameContract } from '~/hooks/game'
-import { bigDataToNumber, dataToNumber } from '~/utils'
+import { bigDataToNumber, dataToNumber, numberWithCommas } from '~/utils'
 import { useErc721Contract } from '~/hooks/erc721'
 import { BigNumber } from 'bignumber.js'
 import Image from 'next/image'
@@ -86,7 +86,7 @@ const PlanetImage = ({ planetId }: { planetId: any }) => {
         return `${acc}${hex2a(hashName)}`
       }, '')
 
-      const url = `${ipfsUrl}${uri.replace('ipfs://', '')}.json`
+      const url = `${ipfsUrl}${uri.replace('ipfs://', '')}`
 
       axios
         .get(url)
@@ -108,6 +108,7 @@ const PlanetImage = ({ planetId }: { planetId: any }) => {
 
   const imgId = useMemo(() => {
     if (planetId != undefined) {
+      console.log('PLANET ID: ', dataToNumber(planetId['low']))
       if (dataToNumber(planetId['low']) % 15 == 0) {
         return 15
       } else {
@@ -127,24 +128,24 @@ const PlanetImage = ({ planetId }: { planetId: any }) => {
 
       <PlanetInfoContainer>
         <PlanetInfoRow>
-          <PlanetInfoKey>Position</PlanetInfoKey>
+          <PlanetInfoKey>Type</PlanetInfoKey>
           <PlanetInfoValue>
             <PlanetIcon />
-            {findAttribute('position')}
+            {findAttribute('type')}
           </PlanetInfoValue>
         </PlanetInfoRow>
         <PlanetInfoRow>
-          <PlanetInfoKey>Size</PlanetInfoKey>
+          <PlanetInfoKey>Diameter</PlanetInfoKey>
           <PlanetInfoValue>
             <ScaleIcon />
-            {findAttribute('size')}
+            {numberWithCommas(dataToNumber(findAttribute('size')) * 10 ** 4)} km
           </PlanetInfoValue>
         </PlanetInfoRow>
         <PlanetInfoRow>
-          <PlanetInfoKey>Temp</PlanetInfoKey>
+          <PlanetInfoKey>Avg Temp</PlanetInfoKey>
           <PlanetInfoValue>
             <TemperatureIcon />
-            {findAttribute('temperature')}
+            {findAttribute('temperature')} °C
           </PlanetInfoValue>
         </PlanetInfoRow>
       </PlanetInfoContainer>
