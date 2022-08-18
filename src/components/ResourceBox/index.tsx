@@ -123,13 +123,13 @@ const ResourceBox = ({
   const energy = costUpdate ? numberWithCommas(costUpdate.energy) : null
 
   const buttonState = useMemo((): ButtonState => {
-    if (!hasEnoughResources) {
-      return 'noResource'
-    }
     if (time !== undefined && time > 0) {
       return 'upgrading'
     } else if (time !== undefined && time === 0) {
       return 'updated'
+    }
+    if (!hasEnoughResources) {
+      return 'noResource'
     }
 
     return 'valid'
