@@ -16,7 +16,7 @@ import coins from '../../assets/icons/Coins.svg'
 import gem from '../../assets/icons/Gem.svg'
 import atom from '../../assets/icons/Atom.svg'
 import bolt from '../../assets/icons/Bolt.svg'
-import { dataToNumber, E18ToNumber, numberWithCommas } from '~/utils'
+import { bigDataToNumber, dataToNumber, E18ToNumber, numberWithCommas } from '~/utils'
 
 const Container = styled.div`
   //width: 250px;
@@ -124,25 +124,26 @@ const ResourcesContainer = () => {
       }
     }
   }, [res])
+
   return (
     <div>
       <Resource
         title="Metal"
-        address="0x07d236d9446bbe6fa315d1dfe4a952ee8fc0e6ad9fd44789947ab2c01fcfcd91"
+        address="0x006ba38dd663708aa1bc8d5fca1439ec474dbc34453b29d172c3db55b1ab85ce"
         img={iron}
         iconImg={coins}
         total={resources?.metal}
       />
       <Resource
         title="Crystal"
-        address="0x062dd487cc4c3eee23fa185ec71da52c6942fc53086912880e68b1b52435c00a"
+        address="0x052156397bdf27199ce4f04450e29c3623851249126f3d7f3515f1d014fd5c3a"
         img={crystal}
         iconImg={gem}
         total={resources?.crystal}
       />
       <Resource
         title="Deuterium"
-        address="0x07996b41f8ef1f5e746eb6ecb9b99adeb0a8cff2095a4d85d40ac493781c7998"
+        address="0x038467b83ebaa781a17641a5d32b5adf465ad6cca7486f7b5698655a087a7085"
         img={deuterium}
         iconImg={atom}
         total={resources?.deuterium}

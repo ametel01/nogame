@@ -2,6 +2,23 @@
     {
         "members": [
             {
+                "name": "low",
+                "offset": 0,
+                "type": "felt"
+            },
+            {
+                "name": "high",
+                "offset": 1,
+                "type": "felt"
+            }
+        ],
+        "name": "Uint256",
+        "size": 2,
+        "type": "struct"
+    },
+    {
+        "members": [
+            {
                 "name": "metal",
                 "offset": 0,
                 "type": "felt"
@@ -219,6 +236,21 @@
         ],
         "keys": [],
         "name": "OwnershipTransferred",
+        "type": "event"
+    },
+    {
+        "data": [
+            {
+                "name": "planet_id",
+                "type": "Uint256"
+            },
+            {
+                "name": "spent",
+                "type": "felt"
+            }
+        ],
+        "keys": [],
+        "name": "resources_spent",
         "type": "event"
     },
     {
